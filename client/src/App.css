@@ -1,0 +1,218 @@
+/* MOBILE FIRST */
+
+.landing-page {
+  .landing-page__one,
+  .landing-page__two {
+    width: 100vw;
+    height: 100svh;
+    padding: 100px 50px;
+  }
+
+  .landing-page__one {
+    h1 {
+      max-width: 456px;
+      font-size: clamp(3rem, 4vw, 5.5rem);
+      margin-top: 100px;
+    }
+
+    .landing__logo {
+      color: var(--primary);
+      font-size: clamp(3.8rem, 5vw, 8rem);
+    }
+
+    .get-started-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 280px;
+      padding: 20px 45px;
+      border-radius: 50px;
+      background-color: var(--primary);
+      box-shadow: 2px 2px 8px #979797;
+      cursor: pointer;
+      margin-inline: auto;
+      margin-top: 180px;
+
+      p {
+        font-size: 1.5rem;
+        color: var(--white);
+      }
+
+      .btn-icon path {
+        color: white;
+      }
+    }
+  }
+
+  .landing-page__two {
+    .onboarding__top {
+      display: flex;
+      align-items: center;
+      margin-bottom: 80px;
+
+      h2 {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        line-height: 1.2;
+        margin-left: 1.25rem;
+      }
+    }
+
+    .onboarding__left {
+      margin-bottom: 120px;
+      h1 {
+        font-size: clamp(3rem, 4vw, 5.5rem);
+
+        max-width: 456px;
+        line-height: 1.1;
+        margin-bottom: 12px;
+      }
+
+      p {
+        max-width: 470px;
+        font-size: clamp(1rem, 3vw, 1.688rem);
+        color: var(--ashblack);
+      }
+    }
+
+    .onboarding__right {
+      .btn__signup,
+      .btn__login {
+        padding: 14px 0px;
+        text-align: center;
+        border-radius: 50px;
+        cursor: pointer;
+        max-width: 280px;
+        margin-inline: auto;
+      }
+
+      .btn__signup p,
+      .btn__login p {
+        text-align: center;
+        font-size: clamp(1rem, 2vw, 1.4rem);
+      }
+
+      .btn__signup {
+        background-color: var(--primary);
+        color: white;
+        margin-bottom: 20px;
+        p {
+          color: white;
+        }
+      }
+
+      .btn__login {
+        border: 1px solid var(--primary);
+      }
+    }
+  }
+}
+
+.signup_page {
+  .onboarding__top {
+    margin-bottom: 20px !important;
+  }
+
+  .onboarding__left {
+    h2 {
+      margin-bottom: 30px;
+      font-size: 1.7rem;
+      font-weight: 600;
+    }
+  }
+
+  .inputfield__container {
+    width: 350px;
+    position: relative;
+    padding: 20px 20px 5px;
+    background: var(--white);
+    margin-bottom: 15px;
+    border-radius: 20px;
+  }
+
+  .inputfield__input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 5px 8px;
+  }
+
+  .inputfield__label {
+    position: absolute;
+    /* transform: translateY(-5px); */
+    left: 20px;
+    padding-inline: 5px;
+    color: var(--placeholder);
+    transition: 150ms;
+  }
+
+  .inputfield__input:focus + .inputfield__label,
+  .inputfield__input:required:valid + .inputfield__label {
+    transform: translateY(-15px);
+    font-size: 13px;
+  }
+
+  .signup__createaccount {
+    background-color: var(--primary);
+    width: 350px;
+    border: none;
+    padding: 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-family: "Outfit", sans-serif;
+    color: var(--white);
+    cursor: pointer;
+  }
+}
+
+/* DESKTOP */
+
+@media screen and (min-width: 1000px) {
+  .landing-page {
+    .landing-page__one,
+    .landing-page__two {
+      padding: 112px 14%;
+    }
+
+    .landing-page__one {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h1,
+      .get-started-btn {
+        margin-top: unset;
+      }
+
+      .get-started-btn {
+        margin-inline: unset;
+      }
+    }
+
+    .landing-page__two {
+      position: relative;
+
+      .onboarding__left {
+        margin-top: 120px;
+      }
+
+      .onboarding__right {
+        position: absolute;
+        right: 14%;
+        bottom: 22%;
+
+        .btn__login,
+        .btn__signup {
+          text-align: center;
+          width: 300px;
+          padding: 20px 0px;
+        }
+
+        .btn__login p,
+        .btn__signup p {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

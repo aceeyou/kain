@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Krona+One&family=Outfit:wght@100..900&display=swap");
+
+:root {
+  --primary: #f04134;
+  --secondary: #fbd67e;
+  --offwhite: #f6ede1;
+  --ashblack: #4d4d4d;
+  --text: #000;
+  --white: #fff;
+  --accept: #63d18f;
+  --placeholder: #aaa;
+
+  font-family: "Outfit", system-ui, Helvetica, Arial, sans-serif;
+  line-height: 1.15;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: var(--text);
+}
+
+body {
+  background-color: var(--offwhite);
+}
+
+input {
+  font-family: "Outfit", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.logo {
+  color: var(--primary);
+  font-size: 5.8rem;
+}
