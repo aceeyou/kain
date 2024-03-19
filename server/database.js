@@ -29,6 +29,7 @@ export async function getUserWithID(id) {
 
 // create user
 export async function registerUser(fullname, email, username, password) {
+  // hash password
   const result = await pool.query(
     `
         INSERT INTO users (fullname, email, username, password)
