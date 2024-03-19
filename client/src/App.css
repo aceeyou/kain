@@ -4,8 +4,8 @@
   .landing-page__one,
   .landing-page__two {
     width: 100vw;
-    height: 100svh;
-    padding: 100px 50px;
+    min-height: 100svh;
+    padding: 30px 20px;
   }
 
   .landing-page__one {
@@ -108,24 +108,46 @@
 }
 
 .signup_page {
+  height: 100%;
+
   .onboarding__top {
-    margin-bottom: 20px !important;
+    margin-bottom: 40px !important;
+    h2 {
+      font-size: 1rem !important;
+      color: var(--ashblack);
+    }
   }
 
   .onboarding__left {
     h2 {
       margin-bottom: 30px;
-      font-size: 1.7rem;
+      font-size: 1.2rem;
       font-weight: 600;
     }
   }
 
+  .inputfield__outside-container {
+    margin-bottom: 15px;
+
+    p.inputfield__error-message {
+      margin-top: 5px;
+      font-size: 0.875rem;
+      padding-left: 0.5rem;
+      color: var(--primary);
+      display: none;
+    }
+  }
+
+  .inputfield__outside-container:has(.inputfield__input:invalid)
+    .inputfield__error-message {
+    display: block;
+  }
+
   .inputfield__container {
-    width: 350px;
+    width: 100%;
     position: relative;
     padding: 20px 20px 5px;
     background: var(--white);
-    margin-bottom: 15px;
     border-radius: 20px;
   }
 
@@ -156,15 +178,49 @@
     background-color: var(--primary);
     width: 350px;
     border: none;
+    margin-top: 20px;
     padding: 15px;
     border-radius: 20px;
+    font-size: 1.2rem;
     font-weight: 600;
     font-family: "Outfit", sans-serif;
     color: var(--white);
     cursor: pointer;
   }
+
+  .signup_page__right {
+    top: 30%;
+    div {
+      margin-inline: auto;
+      img {
+        width: 250px;
+        aspect-ratio: 1/1;
+      }
+    }
+
+    .google-signin {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      margin-inline: auto;
+      padding: 18px 30px;
+      border: 1px solid var(--primary);
+      border-radius: 50px;
+      cursor: pointer;
+      span {
+        margin-left: 20px;
+        font-size: 1.25rem;
+      }
+    }
+  }
 }
 
+.signup_error-pw-not-matching {
+  font-size: 0.88rem !important;
+  padding-left: 0.8rem !important;
+  transform: translateY(-8px) !important;
+  color: var(--primary) !important;
+}
 /* DESKTOP */
 
 @media screen and (min-width: 1000px) {

@@ -24,6 +24,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+::-ms-reveal {
+  filter: invert(100%);
+}
+
 *,
 *::before,
 *::after {
