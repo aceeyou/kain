@@ -4,6 +4,16 @@ import { getUsers, getUserWithID, registerUser } from "./database.js";
 const app = express();
 app.use(express.json());
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.get("/users", async (req, res) => {
   const users = await getUsers();
   res.send(users);

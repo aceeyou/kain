@@ -5,9 +5,9 @@ import "./App.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.tsx";
-import Landing from "./pages/Landing.tsx";
+import OnBoarding from "./pages/OnBoarding.tsx";
 import PageNotFound from "./pages/PageNotFound.tsx";
-import Signup from "./pages/Signup.tsx";
+import UserRegistration from "./pages/UserRegistration.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +17,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/landing",
-    element: <Landing />,
+    element: <OnBoarding />,
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: <UserRegistration />,
   },
 ]);
 
