@@ -10,6 +10,8 @@
   --accept: #63d18f;
   --placeholder: #aaa;
 
+  --desktop-screen: 900px;
+
   font-family: "Outfit", system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.15;
   font-weight: 400;
@@ -38,6 +40,26 @@
   color: var(--text);
 }
 
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: transparent;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: transparent;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: transparent;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: transparent;
+}
+input::placeholder {
+  color: transparent;
+}
+
 body {
   background-color: var(--offwhite);
 }
@@ -48,6 +70,32 @@ input {
 
 a {
   text-decoration: none;
+}
+
+button {
+  font-family: "Outfit", sans-serif;
+}
+
+.h1 {
+  font-size: clamp(2.875rem, 2.655vw + 1.3rem, 4rem);
+}
+.h2 {
+  font-size: clamp(1.688rem, 1.655vw + 1.3rem, 2.438rem);
+}
+.h3 {
+  font-size: clamp(1.25rem, 1.655vw + 1.3rem, 2.063rem);
+}
+.h4 {
+  font-size: 1.728rem;
+}
+.h5 {
+  font-size: 1.44rem;
+}
+.h6 {
+  font-size: 1.2rem;
+}
+.small {
+  font-size: 0.833rem;
 }
 
 .logo {

@@ -1,41 +1,59 @@
-interface PropType {
-  name: string;
-  label: string;
-  inputType: string;
-  value: string;
-  onChange: any | null;
-  pattern?: string;
-  error_msg?: string | null;
-}
+// interface PropType {
+//   name: string;
+//   label: string;
+//   inputType: string;
+//   value: string;
+//   onChange: any | null;
+//   pattern?: string;
+//   error_msg?: string | null;
+// }
 
-function InputField({
-  name,
-  label,
-  inputType,
-  value,
-  onChange,
-  pattern,
-  error_msg = null,
-}: PropType) {
+import { useState } from "react";
+
+function InputField(props: any) {
+  const [focused, setFocused] = useState(false);
+  const {
+    name,
+    label,
+    onChange,
+    autocapitalize,
+    errorMessage,
+    value,
+    ...inputOptions
+  } = props;
   return (
-    <div className="inputfield__outside-container">
-      <div className="inputfield__container">
+    <div className="inputfield__main-container">
+      <div className="inputfield__input-container">
         <input
-          className="inputfield__input"
-          type={inputType}
-          value={value}
           name={name}
-          id={name}
+          placeholder={name}
+          className="inputfield__input"
+          {...inputOptions}
           onChange={onChange}
+          onBlur={() => setFocused(true)}
+          onFocus={() =>
+            (inputOptions.name === "confirmpw" || "password") &&
+            setFocused(true)
+          }
+          focused={focused.toString()}
           autoComplete="false"
-          pattern={pattern}
-          required
+          autoCapitalize={`
+            ${
+              inputOptions.name === "fullname" &&
+              inputOptions.name !== "username"
+                ? "true"
+                : "false"
+            }
+          `}
         />
-        <label htmlFor={name} className="inputfield__label">
+        <label
+          htmlFor={name}
+          className={`inputfield__label ${value ? "inputHasValue" : ""}`}
+        >
           {label}
         </label>
       </div>
-      <p className="inputfield__error-message">{error_msg}</p>
+      <p className="inputfield__error-message">{errorMessage}</p>
     </div>
   );
 }

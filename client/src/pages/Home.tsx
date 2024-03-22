@@ -1,4 +1,4 @@
-import Landing from "./Landing";
+import Landing from "./OnBoarding";
 
 function Home() {
   const user: boolean = false;
