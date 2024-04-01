@@ -1,0 +1,130 @@
+.container__profile-page {
+  min-height: 100svh;
+
+  header {
+    padding: 60px 15px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    nav {
+      width: fit-content;
+      ul {
+        display: flex;
+        list-style: none;
+        gap: 1.25rem;
+        align-items: center;
+        justify-content: flex-end;
+
+        li {
+          display: block;
+          display: grid;
+          place-items: center;
+          width: 27px;
+          aspect-ratio: 1 / 1;
+          cursor: pointer;
+
+          &:nth-child(1) {
+            background-color: var(--secondary);
+            border-radius: 50%;
+          }
+
+          &:nth-child(2),
+          &:nth-child(3) {
+            border: 1.25px solid black;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.profile__container {
+  display: flex;
+  margin-top: 20px;
+  padding-inline: 15px;
+  .profile__left-container {
+    flex: 2.5;
+  }
+
+  .profile__right-container {
+    flex: 5.5;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+
+    .top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      .profile__user {
+        .profile__user-name {
+          font-size: 1.125rem;
+          font-weight: 500;
+        }
+        .profile__user-username {
+          font-size: 0.625rem;
+          color: var(--ashblack);
+        }
+      }
+
+      .profile__edit-btn-container {
+        button {
+          background-color: var(--offwhite);
+          padding: 2px 12px;
+          font-size: 0.625rem;
+          border-radius: 3px;
+          border: 0.5px solid var(--ashblack);
+          cursor: pointer;
+        }
+      }
+    }
+
+    .bottom {
+      display: flex;
+      flex-direction: row;
+      margin-top: 15px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        p {
+          font-size: 0.938rem;
+        }
+
+        span {
+          font-size: 0.625rem;
+        }
+
+        &:not(:nth-child(3)) {
+          margin-right: 2.25rem;
+        }
+      }
+    }
+  }
+}
+
+.posts {
+  margin-top: 1.875rem;
+  .post__navigation {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 0.3px solid var(--placeholder);
+    div {
+      padding-bottom: 4px;
+    }
+  }
+}
+
+.nav__logo {
+  font-family: "Krona One";
+  color: var(--primary);
+  letter-spacing: -2px;
+}

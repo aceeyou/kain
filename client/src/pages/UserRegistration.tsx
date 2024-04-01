@@ -6,8 +6,17 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+interface FormTypes {
+  [key: string]: string;
+  fullname: string;
+  email: string;
+  username: string;
+  password: string;
+  confirmpw: string;
+}
+
 function UserRegistration() {
-  const [userForm, setUserForm] = useState({
+  const [userForm, setUserForm] = useState<FormTypes>({
     fullname: "",
     email: "",
     username: "",

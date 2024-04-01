@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { FaSpoon } from "react-icons/fa6";
-import { PiPauseLight } from "react-icons/pi";
+// import { FaSpoon } from "react-icons/fa6";
+import { PiPauseLight, PiForkKnifeFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
 function OnBoarding() {
@@ -22,7 +22,7 @@ function OnBoarding() {
               onClick={() => setNext(true)}
             >
               <span className="h4">Get Started</span>
-              <FaSpoon />
+              <PiForkKnifeFill size={23} />
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@ function OnBoarding() {
                   <span className="h6">Create an account</span>
                 </button>
               </Link>
-              <Link to={"/signup"}>
+              <Link to={"/login"}>
                 <button
                   tabIndex={-1}
                   className="account-creation__btn account-creation__login"

@@ -1,12 +1,12 @@
 import "./App.css";
-import Landing from "./pages/OnBoarding";
+import { useSelector } from "react-redux";
+import { selectUser } from "./reducers/userSlice";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 
 function App() {
-  return (
-    <>
-      <Landing />
-    </>
-  );
+  const user = useSelector(selectUser);
+  return <div>{user ? <Home /> : <Login />}</div>;
 }
 
 export default App;
