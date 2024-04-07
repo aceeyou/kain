@@ -23,7 +23,7 @@ export async function getUsers() {
 
 export async function getUserWithID(id) {
   const [result] = await pool.query(
-    `SELECT _id, fullname, email, username, recipe_count, following_count, follower_count FROM users WHERE _id = ?`,
+    `SELECT _id, fullname, email, username, profilePicture, recipe_count, following_count, follower_count FROM users WHERE _id = ?`,
     [id]
   );
   return result[0];
@@ -45,6 +45,19 @@ export async function registerUser(fullname, email, username, password) {
   const new_id = result.insertId;
   const query = getUserWithID(new_id);
   return query;
+}
+
+export async function updateProfilePicture(id, image_url) {
+  const result = await pool.query(
+    `
+      UPDATE users SET profilePicture = ? WHERE _id = ?
+    `,
+    [image_url, id]
+  );
+  if (result) {
+    const user = getUserWithID(id);
+    return user;
+  }
 }
 
 export async function loginUser(username, password) {

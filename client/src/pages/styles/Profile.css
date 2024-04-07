@@ -1,5 +1,7 @@
 .container__profile-page {
   min-height: 100svh;
+  max-width: 600px;
+  margin-inline: auto;
 
   header {
     padding: 60px 15px 0px;
@@ -45,6 +47,17 @@
   display: flex;
   margin-top: 20px;
   padding-inline: 15px;
+
+  .profile__display-picture {
+    width: 60px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px #c7c7c7;
+    cursor: pointer;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
   .profile__left-container {
     flex: 2.5;
   }
@@ -119,6 +132,9 @@
     border-bottom: 0.3px solid var(--placeholder);
     div {
       padding-bottom: 4px;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
     }
   }
 }

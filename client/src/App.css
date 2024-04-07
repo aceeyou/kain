@@ -204,6 +204,7 @@ SIGN UP FORM
 .login__container {
   height: calc(100svh - 200px);
   display: grid;
+  margin-inline: auto;
 
   .login__logo {
     font-size: 4.3rem;
@@ -215,6 +216,15 @@ SIGN UP FORM
 
   .loginForm {
     margin-top: 0;
+    margin-inline: auto;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .login__err-msg {
+    color: var(--primary);
+    margin-bottom: 10px;
+    text-align: center;
   }
 }
 
@@ -226,7 +236,7 @@ SIGN UP FORM
   position: relative;
   margin-bottom: 15px;
   width: 100%;
-  max-width: 350px;
+  max-width: 100%;
 
   .inputfield__input-container {
     border-radius: 6px;
@@ -236,6 +246,7 @@ SIGN UP FORM
     flex-direction: column;
 
     .inputfield__input {
+      width: 90%;
       background-color: transparent;
       border: none;
       outline: none;
@@ -259,10 +270,25 @@ SIGN UP FORM
   }
 }
 
+.password__view-btn {
+  position: absolute;
+  right: 20px;
+  top: 13px;
+  cursor: pointer;
+  z-index: 99;
+  background-color: transparent;
+  border: none;
+  padding: 1px 4px;
+
+  & > * {
+    transform: translateY(2px);
+  }
+}
+
 .registrationForm__submit-btn,
 .login__submit-btn {
   width: 100%;
-  max-width: 350px;
+  /* max-width: 400px; */
   padding-block: 16px;
   margin-block: 5px 30px;
   border-radius: 6px;
@@ -273,6 +299,10 @@ SIGN UP FORM
   color: var(--white);
   letter-spacing: 0.7px;
   background-color: var(--primary);
+}
+
+.inputfield__input {
+  width: 100%;
 }
 
 .inputfield__input:focus + .inputfield__label,
@@ -298,10 +328,14 @@ SIGN UP FORM
 
 /* END INPUT FIELD */
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 600px) {
   .onboarding__welcome-container,
   .onboarding__account-creation {
     padding-inline: 50px;
+  }
+
+  .login__container {
+    width: 400px;
   }
 }
 

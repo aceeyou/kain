@@ -15,6 +15,11 @@ import PageNotFound from "./pages/PageNotFound.tsx";
 import UserRegistration from "./pages/UserRegistration.tsx";
 import Login from "./pages/Login.tsx";
 import Profile from "./pages/Profile.tsx";
+import AddRecipe from "./pages/AddRecipe.tsx";
+
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
   {
@@ -39,8 +44,11 @@ const router = createBrowserRouter([
     path: "/profile",
     element: <Profile />,
   },
+  {
+    path: "/addrecipe",
+    element: <AddRecipe />,
+  },
 ]);
-
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

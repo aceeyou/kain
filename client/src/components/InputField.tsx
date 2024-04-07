@@ -9,6 +9,7 @@
 // }
 
 import { useState } from "react";
+import { PiEye, PiEyeClosed } from "react-icons/pi";
 
 function InputField(props: any) {
   const [focused, setFocused] = useState(false);
@@ -16,9 +17,9 @@ function InputField(props: any) {
     name,
     label,
     onChange,
-    autocapitalize,
     errorMessage,
     value,
+    handleViewPw,
     ...inputOptions
   } = props;
   return (
@@ -52,6 +53,15 @@ function InputField(props: any) {
         >
           {label}
         </label>
+        {name === "password" && (
+          <button className="password__view-btn" onClick={handleViewPw}>
+            {props.type === "password" ? (
+              <PiEyeClosed size={20} />
+            ) : (
+              <PiEye size={20} />
+            )}
+          </button>
+        )}
       </div>
       <p className="inputfield__error-message">{errorMessage}</p>
     </div>

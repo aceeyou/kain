@@ -15,6 +15,8 @@ interface LoginFormType {
 
 function Login() {
   // const user = useSelector((state) => state.login);
+  const [errPw, setErrPw] = useState("");
+  const [viewPw, setViewPw] = useState("password");
   const dispatch = useDispatch();
   const [userForm, setUserForm] = useState<LoginFormType>({
     username: "",
@@ -29,7 +31,6 @@ function Login() {
       errorMessage: "Username must be atleast 4 characters long",
       type: "text",
       required: true,
-      pattern: "{3,20}",
       title: "Username",
     },
     {
@@ -37,12 +38,16 @@ function Login() {
       name: "password",
       label: "Password",
       errorMessage: "Password is not correct",
-      type: "password",
+      type: viewPw,
       required: true,
-      pattern: "{8,}",
       title: "Password",
     },
   ];
+
+  function handleViewPw(e: any) {
+    e.preventDefault();
+    viewPw === "password" ? setViewPw("text") : setViewPw("password");
+  }
 
   function handleInputChange(e: { target: HTMLInputElement }): any {
     setUserForm({ ...userForm, [e.target.name]: e.target.value });
@@ -53,23 +58,33 @@ function Login() {
 
     // send to backend server
     await axios
-      .post("http://127.0.0.1:8080/login", {
-        username: userForm.username,
-        password: userForm.password,
-      })
+      .post(
+        "http://127.0.0.1:8080/login",
+        {
+          username: userForm.username,
+          password: userForm.password,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         console.log("login res: ", res);
-        dispatch(
-          login({
-            fullname: res.data.fullname,
-            user: res.data,
-          })
-        );
-        setUserForm({
-          username: "",
-          password: "",
-        });
-        navigate(`/profile`);
+        if (res.data === "Incorrect password. Try again") {
+          setErrPw("Incorrect password. Try again.");
+        } else {
+          dispatch(
+            login({
+              fullname: res.data.fullname,
+              user: res.data,
+            })
+          );
+          setUserForm({
+            username: "",
+            password: "",
+          });
+          navigate(`/`);
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -89,8 +104,10 @@ function Login() {
               {...input}
               value={userForm[input.name]}
               onChange={handleInputChange}
+              handleViewPw={handleViewPw}
             />
           ))}
+          {errPw && <p className="login__err-msg">{errPw}</p>}
           <button className="login__submit-btn">Log in</button>
         </form>
       </section>
