@@ -68,12 +68,62 @@ export async function loginUser(username, password) {
     [username]
   );
   const result = login[0][0];
+
+  if (!result) {
+    return `User ${username} does not exist.`;
+  }
+
   const hashMatch = await bcrypt.compare(password, result.password);
 
   if (!hashMatch) {
     return "Incorrect password. Try again";
   }
   return await getUserWithID(result._id);
+}
+
+// add recipe
+export async function addRecipe(recipe) {
+  const recipeInsert = await pool.query(
+    `
+    INSERT INTO recipes (recipe_name, description, preparation_time, preparation_unit, cooking_time, cooking_unit, servings, user_id) VALUES (?,?,?,?,?,?,?,?)
+    `,
+    [
+      recipe.recipeName,
+      recipe.description,
+      recipe.prepTime.time,
+      recipe.prepTime.unit,
+      recipe.cookTime.time,
+      recipe.cookTime.unit,
+      recipe.servings,
+      recipe.userId,
+    ]
+  );
+
+  const result = recipeInsert;
+  const recipeId = result[0].insertId;
+  return recipeId;
+}
+
+export async function updateRecipeImageURL(recipeId, url) {
+  const result = await pool.query(
+    `
+      UPDATE recipes SET image = ? WHERE _id = ?
+    `,
+    [url, recipeId]
+  );
+  if (result) {
+    return true;
+  }
+}
+export async function getRecipesOfUser(id) {
+  const result = await pool.query(
+    `
+    SELECT * FROM recipes WHERE user_id = ?
+    `,
+    [id]
+  );
+
+  return result;
 }
 
 // check if email exists

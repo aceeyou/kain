@@ -1,0 +1,244 @@
+.container__add-recipe {
+  min-height: 100svh;
+  max-width: 600px;
+  margin-inline: auto;
+
+  header {
+    padding: 60px 15px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    div:not(:nth-child(2)) {
+      cursor: pointer;
+    }
+
+    div:nth-child(3) {
+      padding: 2px 5px;
+      background-color: var(--accept);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      color: var(--white);
+    }
+  }
+
+  main {
+    padding: 30px 15px;
+
+    form {
+      width: 100%;
+      div {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          margin-bottom: 7px;
+          font-size: 0.75rem;
+        }
+        input {
+          border: 1px solid #bbb;
+          background-color: var(--white);
+          border-radius: var(--rounded);
+          padding: 3px 8px;
+          max-width: 450px;
+        }
+      }
+      .recipe__image-upload-btn {
+        width: 100%;
+        height: 380px;
+        margin-block: 18px;
+        background-color: #d9d9d9;
+        display: grid;
+        place-content: center;
+        place-items: center;
+        background-size: cover;
+        background-position: center;
+        object-fit: cover;
+
+        svg {
+          path {
+            color: white;
+          }
+        }
+
+        button {
+          width: 140px;
+          margin-top: 10px;
+          padding-block: 10px;
+          background-color: var(--white);
+          font-weight: 600;
+          color: var(--ashblack);
+          border: none;
+          border-radius: var(--rounded);
+          box-shadow: 0 2px 8px #cbcbcb;
+          cursor: pointer;
+        }
+      }
+      .cooking-time-input-container {
+        display: flex;
+        flex-direction: row;
+        div {
+          div {
+            display: flex;
+            flex-direction: row;
+            input {
+              width: 60px;
+            }
+            select {
+              width: 50px;
+              margin-left: 6px;
+              background-color: var(--white);
+              border: 1px solid #ccc;
+            }
+          }
+          &:nth-child(1) {
+            margin-right: 40px;
+          }
+        }
+      }
+
+      .servings-grp {
+        margin-block: 20px;
+        input {
+          width: 100px;
+        }
+      }
+
+      .description-container {
+        margin-block: 15px 20px;
+
+        textarea {
+          background-color: var(--white);
+          padding: 6px 8px;
+          border: 1px solid #ccc;
+          resize: none;
+        }
+      }
+
+      .ingredients-section-container {
+        border-top: 1px solid #bbb;
+        padding-top: 12px;
+        border-bottom: 1px solid #bbb;
+        padding-bottom: 5px;
+        .ingredients__header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            span {
+              margin-left: 5px;
+              font-size: 0.875rem;
+            }
+          }
+          label {
+            font-size: 1.125rem;
+            font-weight: 600;
+          }
+        }
+      }
+
+      .ingredients-section-container.instructions {
+        border-top: none;
+        padding-top: 0;
+        margin-top: 15px;
+      }
+
+      .expandable__content {
+        padding-block: 8px 10px;
+
+        ul {
+          width: 100%;
+          list-style: none;
+          li {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 5px;
+
+            input {
+              width: 100%;
+            }
+          }
+
+          li:nth-child(1) {
+            margin-bottom: 8px;
+
+            p {
+              font-size: 0.75rem;
+            }
+          }
+        }
+
+        .ingredient__add-btn {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-block: 15px 5px;
+          cursor: pointer;
+
+          svg {
+            padding: 1px 2px;
+            border: 1px solid black;
+            border-radius: 50%;
+          }
+
+          span {
+            margin-left: 30px;
+            color: var(--ashblack);
+          }
+        }
+      }
+
+      .expandable__content.instruction__section {
+        ul {
+          li {
+            width: 100%;
+            display: flex;
+            .instruction__controls {
+              display: flex;
+              align-items: center;
+              text-align: center;
+              padding: 3px 4px;
+              span {
+                width: 18px;
+                padding: 1.5px 0 0 0;
+                aspect-ratio: 1 / 1;
+                text-align: center;
+                background-color: var(--ashblack);
+                font-size: 0.75rem;
+                color: var(--white);
+                border-radius: 50%;
+              }
+
+              .instruction__controls-btns {
+                background-color: var(--white);
+                margin-block: 5px;
+                padding: 1px;
+                border-radius: var(--rounded);
+
+                div {
+                  cursor: pointer;
+                  font-size: 20px;
+                }
+              }
+            }
+
+            .instruction__content {
+              textarea {
+                width: 100%;
+                padding: 4px 6px;
+                font-size: 0.875rem;
+                background-color: var(--white);
+                resize: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

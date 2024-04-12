@@ -54,7 +54,11 @@ function InputField(props: any) {
           {label}
         </label>
         {name === "password" && (
-          <button className="password__view-btn" onClick={handleViewPw}>
+          <button
+            className="password__view-btn"
+            tabIndex={-1}
+            onClick={handleViewPw}
+          >
             {props.type === "password" ? (
               <PiEyeClosed size={20} />
             ) : (

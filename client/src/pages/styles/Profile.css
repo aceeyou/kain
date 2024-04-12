@@ -137,6 +137,19 @@
       text-align: center;
     }
   }
+
+  .posts__recipes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    div {
+      img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+      }
+    }
+  }
 }
 
 .nav__logo {

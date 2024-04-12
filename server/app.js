@@ -1,5 +1,5 @@
 import express from "express";
-import bcrypt, { hash } from "bcrypt";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -13,6 +13,9 @@ import {
   emailExistsChecker,
   usernameExistsChecker,
   updateProfilePicture,
+  addRecipe,
+  updateRecipeImageURL,
+  getRecipesOfUser,
 } from "./database.js";
 
 // import { cloudinary } from "./helpers/cloudinary";
@@ -20,8 +23,8 @@ import {
 const app = express();
 app.use(cors({ credentials: true, origin: true }));
 app.use(cookieParser());
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb" }));
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -43,7 +46,6 @@ async function hashPassword(pw) {
 
 async function authenticateToken(req, res, next) {
   const token = req.cookies.token;
-  console.log("cookie token: ", token);
   if (token === null || token === undefined) return res.sendStatus(401);
   try {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
@@ -86,7 +88,6 @@ app.get("/user/:id", async (req, res) => {
 app.post("/register", async (req, res) => {
   const { fullname, email, username, password } = req.body;
   const hashedPassword = await hashPassword(password);
-  // console.log("Register | Password-: ", hashedPassword);
   try {
     if (!(fullname && email && username && password)) {
       res.status(400).send("All fileds should be filled");
@@ -138,7 +139,6 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", authenticateToken, async (req, res) => {
   const user = await getUserWithID(req.user.id);
-  console.log(user);
   res.send(user);
 });
 
@@ -146,7 +146,7 @@ app.post("/uploadProfilePicture", authenticateToken, async (req, res) => {
   let { userId, image } = req.body;
   try {
     const result = await cloudinary.uploader.upload(image, {
-      upload_preset: "kainuploads",
+      upload_preset: "chdu8p2z",
     });
 
     if (result) {
@@ -158,7 +158,50 @@ app.post("/uploadProfilePicture", authenticateToken, async (req, res) => {
   }
 });
 
-// app.get("/recipes", authenticateToken, (req, res) => {});
+app.post("/addrecipe", authenticateToken, async (req, res) => {
+  const {
+    recipeName,
+    image,
+    prepTime,
+    cookTime,
+    servings,
+    description,
+    ingredients,
+    instructions,
+  } = req.body;
+
+  try {
+    const result = await addRecipe({
+      recipeName,
+      description,
+      prepTime,
+      cookTime,
+      servings,
+      userId: req.user.id,
+    });
+
+    if (result) {
+      const recipeImageUpload = await cloudinary.uploader.upload(image, {
+        upload_preset: "chdu8p2z",
+      });
+
+      if (recipeImageUpload) {
+        const updateRecipeImage = await updateRecipeImageURL(
+          result,
+          recipeImageUpload.secure_url
+        );
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/recipes/:id", authenticateToken, async (req, res) => {
+  const result = await getRecipesOfUser(req.params.id);
+  const sendBack = result[0];
+  res.send(sendBack);
+});
 
 // error handler
 app.use((err, req, res, next) => {

@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import { selectUser } from "../reducers/userSlice";
 import "./styles/Profile.css";
 
 import { FaFilter } from "react-icons/fa";
@@ -16,7 +14,6 @@ import defaultDP from "../assets/default-dp.png";
 // axios.defaults.withCredentials = true;
 
 function Profile() {
-  // const user: any = useSelector(selectUser);
   const fileRef = useRef<HTMLInputElement>();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("posts");
@@ -30,6 +27,7 @@ function Profile() {
     follower_count: 0,
   });
   const [image, setImage] = useState(user?.profilePicture);
+  const [recipesOfUser, setRecipesOfUser] = useState([]);
 
   useEffect(() => {
     fetchProfile();
@@ -39,6 +37,8 @@ function Profile() {
     await axios
       .get("http://127.0.0.1:8080/profile", { withCredentials: true })
       .then((data: any) => {
+        console.log(data.data);
+        fetchPostedRecipes(data.data._id);
         setUser({ ...data.data });
         setImage(data.data.profilePicture);
       });
@@ -46,16 +46,18 @@ function Profile() {
     // console.log(user);
   }
 
-  function handleChangeActiveTab(tab: string) {
-    setActiveTab(tab);
+  async function fetchPostedRecipes(id) {
+    console.log(user._id);
+    await axios
+      .get("http://127.0.0.1:8080/recipes/" + id, {
+        withCredentials: true,
+      })
+      .then((data) => setRecipesOfUser(data.data));
+    // if (recipes) console.log(recipes);
   }
 
-  function handleImageChange(e: Event | null) {
-    if (e?.target?.files.length > 0) {
-      let file = e?.target?.files[0];
-
-      transformFile(file);
-    } else return;
+  function handleChangeActiveTab(tab: string) {
+    setActiveTab(tab);
   }
 
   const handleUpload = async (file) => {
@@ -74,6 +76,14 @@ function Profile() {
       console.log(error);
     }
   };
+
+  function handleImageChange(e: Event | null) {
+    if (e?.target?.files.length > 0) {
+      let file = e?.target?.files[0];
+
+      transformFile(file);
+    } else return;
+  }
 
   // transform images to base64
   const transformFile = (file) => {
@@ -186,6 +196,16 @@ function Profile() {
             <IoPlayCircleOutline size={22} />
           </div>
         </div>
+        {activeTab === "posts" && (
+          <div className="posts__recipes">
+            {!!recipesOfUser &&
+              recipesOfUser.map((recipe, index) => (
+                <div key={index}>
+                  <img src={recipe?.image} alt={recipe?.recipe_name} />
+                </div>
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );

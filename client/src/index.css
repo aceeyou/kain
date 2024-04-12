@@ -11,6 +11,7 @@
   --placeholder: #aaa;
 
   --desktop-screen: 900px;
+  --rounded: 3px;
 
   font-family: "Outfit", system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.15;
@@ -40,25 +41,25 @@
   color: var(--text);
 }
 
-::-webkit-input-placeholder {
-  /* WebKit browsers */
+/* WebKit browsers */
+/* ::-webkit-input-placeholder {
   color: transparent;
-}
-:-moz-placeholder {
-  /* Mozilla Firefox 4 to 18 */
+} */
+/* Mozilla Firefox 4 to 18 */
+/* :-moz-placeholder {
   color: transparent;
-}
-::-moz-placeholder {
-  /* Mozilla Firefox 19+ */
+} */
+/* Mozilla Firefox 19+ */
+/* ::-moz-placeholder {
   color: transparent;
-}
-:-ms-input-placeholder {
-  /* Internet Explorer 10+ */
+} */
+/* Internet Explorer 10+ */
+/* :-ms-input-placeholder {
   color: transparent;
-}
-input::placeholder {
+} */
+/* input::placeholder {
   color: transparent;
-}
+} */
 
 body {
   background-color: var(--offwhite);
@@ -72,7 +73,12 @@ a {
   text-decoration: none;
 }
 
-button {
+button,
+input,
+textarea,
+a,
+select,
+option {
   font-family: "Outfit", sans-serif;
 }
 
@@ -101,4 +107,8 @@ button {
 .logo {
   color: var(--primary);
   font-size: 5.8rem;
+}
+
+.sr-only {
+  display: none;
 }
