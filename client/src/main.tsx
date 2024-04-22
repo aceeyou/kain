@@ -18,6 +18,7 @@ import Profile from "./pages/Profile.tsx";
 import AddRecipe from "./pages/AddRecipe.tsx";
 
 import axios from "axios";
+import Recipe from "./pages/Recipe.tsx";
 
 axios.defaults.withCredentials = true;
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/addrecipe",
     element: <AddRecipe />,
+  },
+  {
+    path: "/recipe/:id/:name",
+    element: <Recipe />,
   },
 ]);
 

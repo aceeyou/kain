@@ -18,7 +18,7 @@ function Profile() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("posts");
   const [user, setUser] = useState({
-    _id: "",
+    _id: 0,
     fullname: "",
     username: "",
     profilePicture: defaultDP,
@@ -30,6 +30,10 @@ function Profile() {
   const [recipesOfUser, setRecipesOfUser] = useState([]);
 
   useEffect(() => {
+    fetchPostedRecipes(user._id);
+  }, [navigate]);
+
+  useEffect(() => {
     fetchProfile();
   }, []);
 
@@ -37,7 +41,6 @@ function Profile() {
     await axios
       .get("http://127.0.0.1:8080/profile", { withCredentials: true })
       .then((data: any) => {
-        console.log(data.data);
         fetchPostedRecipes(data.data._id);
         setUser({ ...data.data });
         setImage(data.data.profilePicture);
@@ -46,8 +49,7 @@ function Profile() {
     // console.log(user);
   }
 
-  async function fetchPostedRecipes(id) {
-    console.log(user._id);
+  async function fetchPostedRecipes(id: number) {
     await axios
       .get("http://127.0.0.1:8080/recipes/" + id, {
         withCredentials: true,
@@ -200,7 +202,15 @@ function Profile() {
           <div className="posts__recipes">
             {!!recipesOfUser &&
               recipesOfUser.map((recipe, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  onClick={() => {
+                    navigate(
+                      `/recipe/${recipe._id}/${recipe?.recipe_name}
+                        `
+                    );
+                  }}
+                >
                   <img src={recipe?.image} alt={recipe?.recipe_name} />
                 </div>
               ))}

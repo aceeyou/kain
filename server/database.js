@@ -100,8 +100,64 @@ export async function addRecipe(recipe) {
   );
 
   const result = recipeInsert;
-  const recipeId = result[0].insertId;
-  return recipeId;
+  if (result) {
+    // update recipe_count on user's profile
+    await addRecipeCount(recipe.userId);
+    const recipeId = result[0].insertId;
+    return recipeId;
+  }
+}
+
+async function addRecipeCount(userId) {
+  const recipeCountQuery = await pool.query(
+    `
+      UPDATE users SET recipe_count = recipe_count + 1 WHERE _id = ?
+    `,
+    [userId]
+  );
+  if (recipeCountQuery) return true;
+  return false;
+}
+
+export async function setRecipeIngredients(recipeId, ingredients) {
+  ingredients?.map(async (ingredient) => {
+    try {
+      await pool.query(
+        `
+          INSERT INTO ingredients (recipe_id, ingredient, quantity, unit) VALUES (?, ?, ?, ?)
+        `,
+        [recipeId, ingredient.ingredient, ingredient.quantity, ingredient.unit]
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
+
+export async function setRecipeSteps(recipeId, steps) {
+  steps?.map(async (step) => {
+    try {
+      await pool.query(
+        `
+        INSERT INTO steps (recipe_id, step) VALUES (?, ?)
+        `,
+        [recipeId, step]
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
+
+export async function getRecipeOfId(id) {
+  const recipe = await pool.query(
+    `
+      SELECT * FROM recipes WHERE _id = ?
+    `,
+    [id]
+  );
+
+  if (recipe) return recipe[0];
 }
 
 export async function updateRecipeImageURL(recipeId, url) {
@@ -115,6 +171,7 @@ export async function updateRecipeImageURL(recipeId, url) {
     return true;
   }
 }
+
 export async function getRecipesOfUser(id) {
   const result = await pool.query(
     `
@@ -124,6 +181,26 @@ export async function getRecipesOfUser(id) {
   );
 
   return result;
+}
+
+export async function getIngredientsForRecipe(id) {
+  const result = await pool.query(
+    `
+      SELECT * FROM ingredients WHERE recipe_id = ?
+    `,
+    [id]
+  );
+  if (!!result[0]) return result[0];
+}
+
+export async function getStepsForRecipe(id) {
+  const result = await pool.query(
+    `
+      SELECT * FROM steps WHERE recipe_id = ?
+    `,
+    [id]
+  );
+  if (!!result[0]) return result[0];
 }
 
 // check if email exists

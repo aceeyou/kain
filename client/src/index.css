@@ -42,9 +42,9 @@
 }
 
 /* WebKit browsers */
-/* ::-webkit-input-placeholder {
+::-webkit-input-placeholder {
   color: transparent;
-} */
+}
 /* Mozilla Firefox 4 to 18 */
 /* :-moz-placeholder {
   color: transparent;

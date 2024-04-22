@@ -16,6 +16,11 @@ import {
   addRecipe,
   updateRecipeImageURL,
   getRecipesOfUser,
+  setRecipeIngredients,
+  setRecipeSteps,
+  getRecipeOfId,
+  getIngredientsForRecipe,
+  getStepsForRecipe,
 } from "./database.js";
 
 // import { cloudinary } from "./helpers/cloudinary";
@@ -185,12 +190,17 @@ app.post("/addrecipe", authenticateToken, async (req, res) => {
         upload_preset: "chdu8p2z",
       });
 
+      console.log(await recipeImageUpload);
+
+      // update recipe image
       if (recipeImageUpload) {
-        const updateRecipeImage = await updateRecipeImageURL(
-          result,
-          recipeImageUpload.secure_url
-        );
+        await updateRecipeImageURL(result, recipeImageUpload.secure_url);
       }
+
+      // setting invidual ingredient to the database
+      await setRecipeIngredients(result, ingredients);
+      // setting invidual step to the database
+      await setRecipeSteps(result, instructions);
     }
   } catch (error) {
     console.log(error);
@@ -200,7 +210,35 @@ app.post("/addrecipe", authenticateToken, async (req, res) => {
 app.get("/recipes/:id", authenticateToken, async (req, res) => {
   const result = await getRecipesOfUser(req.params.id);
   const sendBack = result[0];
+
   res.send(sendBack);
+});
+
+app.get("/recipe/:id", authenticateToken, async (req, res) => {
+  try {
+    const result = await getRecipeOfId(req.params.id);
+    if (result) res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/recipe/ingredients/:id", authenticateToken, async (req, res) => {
+  try {
+    const result = await getIngredientsForRecipe(req.params.id);
+    if (result) res.status(200).send(result);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/recipe/steps/:id", authenticateToken, async (req, res) => {
+  try {
+    const result = await getStepsForRecipe(req.params.id);
+    if (result) res.status(200).send(result);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // error handler
