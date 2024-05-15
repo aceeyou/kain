@@ -1,38 +1,84 @@
+/* .page--container {
+  display: flex;
+  flex-direction: row;
+} */
+
+.post_menu {
+  position: absolute;
+  right: 20px;
+  padding: 5px;
+  border-radius: var(--rounded);
+  background-color: white;
+  box-shadow: 0 2px 8px var(--placeholder);
+  transition: 150ms;
+  ul {
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      padding-block: 8px;
+      padding-inline: 15px 30px;
+      svg {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  :focus {
+    outline: 1px solid var(--placeholder);
+    border-radius: var(--rounded);
+  }
+}
+
 .recipe__page {
   min-height: 100svh;
-  max-width: 700px;
+  max-width: 600px;
   margin-inline: auto;
   padding-bottom: 200px;
+  padding-inline: 20px;
+  position: relative;
 }
 
 .recipe__recipe-name {
   font-size: 1.25rem;
-  margin-block: 1rem;
+  margin-block: 1rem 0.1rem;
+}
+
+.recipe__prepared-by {
+  color: var(--placeholder);
+  font-size: 0.875rem;
+  margin-bottom: 0.9rem;
+  .recipe__prepared-by-username {
+    color: var(--placeholder);
+    font-size: 0.875rem;
+  }
 }
 .recipe__image-container {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: auto;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
+  /* position: relative; */
   /* height: 380px; */
   .recipe__background-image {
     position: absolute;
     top: 0;
     z-index: 1;
-    object-fit: fill;
+    object-fit: contain;
     width: 100%;
-    height: 100%;
     opacity: 0.15;
+    display: none;
   }
 
   .recipe__recipe-image {
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     bottom: 0;
     inset: 0;
     margin: auto;
-    height: 95%;
+    width: 100%;
+    /* height: 95%; */
     aspect-ratio: 2 / 1.4;
     z-index: 99;
   }
@@ -44,7 +90,17 @@
   .recipe__cook {
     color: var(--placeholder);
     font-size: 0.875rem;
-    margin-right: 1rem;
+    margin-right: 2rem;
+
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 5px;
+      path {
+        color: var(--placeholder);
+      }
+    }
   }
   .recipe__prep-time,
   .recipe__cook-time {
@@ -53,16 +109,8 @@
   }
 }
 
-.recipe__prepared-by {
-  color: var(--placeholder);
-  font-size: 0.875rem;
-  .recipe__prepared-by-username {
-    color: var(--placeholder);
-    font-size: 0.875rem;
-  }
-}
 .recipe__description {
-  margin-block: 1rem;
+  margin-block: 0.7rem 1rem;
   h2 {
     margin-bottom: 0.6rem;
     font-weight: 500;
@@ -70,6 +118,7 @@
 
   .recipe__description-content {
     color: var(--ashblack);
+    line-height: 1.35;
   }
 }
 
@@ -118,6 +167,14 @@
       .ingredients__quantity {
       }
     }
+
+    .ingredients__ingredient:nth-child(even) {
+      .ingrdients__ingredient-name,
+      .ingredients__measurement-group,
+      .ingredients__quantity {
+        color: var(--ashblack);
+      }
+    }
   }
 }
 
@@ -127,6 +184,7 @@
   .steps-container__top {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     .steps-container__left {
       display: flex;
       flex-direction: row;
