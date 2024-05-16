@@ -201,10 +201,11 @@ SIGN UP FORM
   }
 }
 
-.login__container {
-  height: calc(100svh - 200px);
+#login__container {
   display: grid;
-  margin-inline: auto;
+  place-items: center;
+  height: 90svh;
+  /* height: calc(100svh - 200px); */
 
   .login__logo {
     font-size: 4.3rem;
@@ -237,11 +238,12 @@ SIGN UP FORM
   margin-bottom: 15px;
   width: 100%;
   max-width: 100%;
+  overflow: hidden;
 
   .inputfield__input-container {
+    background-color: white;
+    padding: 8px 18px 3px;
     border-radius: 6px;
-    padding: 10px 18px 3px;
-    border: 1px solid var(--ashblack);
     display: flex;
     flex-direction: column;
 
@@ -310,7 +312,7 @@ SIGN UP FORM
 .inputHasValue {
   transform: translateY(-6px) !important;
   left: 18px;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: var(--ashblack);
 }
 

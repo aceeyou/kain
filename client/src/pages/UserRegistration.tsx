@@ -1,10 +1,28 @@
-import { LuChefHat } from "react-icons/lu";
-import { FaGoogle } from "react-icons/fa";
-
-import InputField from "../components/InputField";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import "./styles/UserRegistration.css";
+import Logo from "../components/Logo";
+
+import InputField from "../components/InputField";
+import { LuChefHat } from "react-icons/lu";
+import { FaGoogle } from "react-icons/fa";
+import { PiEye, PiEyeClosed } from "react-icons/pi";
+
+// RADIX
+import {
+  Box,
+  Container,
+  Heading,
+  Text,
+  Button,
+  Link as RLink,
+  Section,
+  Flex,
+  IconButton,
+} from "@radix-ui/themes";
+import * as Form from "@radix-ui/react-form";
 
 interface FormTypes {
   [key: string]: string;
@@ -16,6 +34,13 @@ interface FormTypes {
 }
 
 function UserRegistration() {
+  const [reveal, setReveal] = useState({ password: false, confirmpw: false });
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [registrationError, setRegistrationError] = useState({
+    field: "",
+    message: "",
+  });
   const [userForm, setUserForm] = useState<FormTypes>({
     fullname: "",
     email: "",
@@ -30,10 +55,10 @@ function UserRegistration() {
       id: 1,
       name: "fullname",
       label: "Full Name",
-      errorMessage: "Name must be atleast 3 characters",
+      errorMessage: "Name must be atleast 5 characters",
       type: "text",
       required: true,
-      pattern: "^[a-zA-Z/s]",
+      pattern: "/^[a-zA-Z]{5,}$/",
       title: "Full Name",
     },
     {
@@ -52,7 +77,7 @@ function UserRegistration() {
       errorMessage: "Username must be atleast 4 characters long",
       type: "text",
       required: true,
-      pattern: "^[a-zA-Z0-9]{3,20}",
+      pattern: "^[a-zA-Z0-9]{6,20}$",
       title: "Username",
     },
     {
@@ -60,11 +85,9 @@ function UserRegistration() {
       name: "password",
       label: "Password",
       errorMessage:
-        "Password should be at least 8 characters and contain at least 1 lower and uppercase letter, and 1 special characrer [?!@#$%^*()]",
+        "Password should be at least 8 characters and must contain at least 1 lowercase letter, 1 uppercase letter, a number, and a special characrer",
       type: "password",
       required: true,
-      pattern:
-        "^(?=.*[0-9](?=.*[a-zA-Z])(?=.*[?!@#$%^*()])[a-zA-Z0-9??!@#$%^*()]{8,20}",
       title: "Password",
     },
     {
@@ -79,6 +102,34 @@ function UserRegistration() {
     },
   ];
 
+  const handleKeyUpPW = (e: any) => {
+    const { value } = e.target;
+    if (
+      !/[A-Z]/.test(value) ||
+      !/[a-z]/.test(value) ||
+      !/[0-9]/.test(value) ||
+      !/[!@#$%^*()<>?]/.test(value) ||
+      value.length < 8
+    ) {
+      setIsPasswordValid(false);
+      return;
+    }
+    setIsPasswordValid(true);
+    return;
+  };
+
+  const handleKeyUpEmail = (e) => {
+    const { value } = e.target;
+    if (
+      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g.test(value)
+    ) {
+      setIsEmailValid(true);
+      return;
+    }
+    setIsEmailValid(false);
+    return;
+  };
+
   function handleInputChange(e: { target: HTMLInputElement }): any {
     setUserForm({ ...userForm, [e.target.name]: e.target.value });
   }
@@ -87,7 +138,6 @@ function UserRegistration() {
     e.preventDefault();
 
     // send to backend server
-
     await axios
       .post("http://127.0.0.1:8080/register", {
         fullname: userForm.fullname,
@@ -96,7 +146,8 @@ function UserRegistration() {
         password: userForm.password,
       })
       .then((res) => {
-        console.log(res.statusText);
+        console.log("then res register", res);
+        console.log("client user registered");
         setUserForm({
           fullname: "",
           email: "",
@@ -104,55 +155,163 @@ function UserRegistration() {
           password: "",
           confirmpw: "",
         });
-        navigate("/");
+        navigate("/login");
       })
-      .catch((err) => console.log(err));
-    // navigate("/");
+      .catch((err) => {
+        console.log(err);
+        console.log(err.response.data.field);
+        console.log(err.response.data.message);
+        setRegistrationError({
+          field: err.response.data.field,
+          message: err.response.data.message,
+        });
+      });
   }
   return (
-    <div className="onboarding-page">
-      <div className="onboarding onboarding__user-registration-container">
-        <div className="left">
-          <div className="top">
-            <h3 className="user-registration__header">
-              <LuChefHat />
-              <span>Create an Account</span>
-            </h3>
-          </div>
-          <section>
-            <h1 className="h3">Sign up using email...</h1>
-            <form
-              method="POST"
-              className="registrationForm"
-              onSubmit={handleOnSubmit}
-              name="registrationForm"
+    <Container size="1">
+      <Box className="registration__container">
+        <Box>
+          <Logo
+            size="9"
+            align="center"
+            style={{}}
+            className="registration__logo"
+          />
+        </Box>
+        <Section>
+          <Box>
+            <Heading
+              as="h2"
+              style={{ fontFamily: "Outfit" }}
+              className="registration__subheading"
             >
-              {inputs.map((input) => (
-                <InputField
-                  key={input.id}
-                  {...input}
-                  value={userForm[input.name]}
-                  onChange={handleInputChange}
-                />
-              ))}
-              <button className="registrationForm__submit-btn">
-                Create Account
-              </button>
-            </form>
-          </section>
-        </div>
-        <div className="right">
-          <div className="top"></div>
-          <section>
-            <span className="divider">----------- or ------------</span>
-            <div className="register-with-google-btn">
-              <FaGoogle size={23} />
-              <span className="h6">Sign up with Google</span>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+              Create Account
+            </Heading>
+            <Text as="p" className="registration__description">
+              The kain app is designed to store your delicious recipes and share
+              them with other chefs. Create an account to start sharing your
+              recipes.
+            </Text>
+          </Box>
+          <Box>
+            <Form.Root
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log("hi");
+              }}
+            >
+              {!!inputs &&
+                inputs.map((input, index) => (
+                  <Form.Field name={input.name} key={index}>
+                    <Flex
+                      direction="column"
+                      className="registration__input-group"
+                    >
+                      <Form.Control asChild>
+                        <input
+                          type={reveal[input.name] ? "text" : input.type}
+                          name={input.name}
+                          required={input?.required}
+                          pattern={input.pattern}
+                          value={userForm[input.name]}
+                          onKeyUp={(e: any) => {
+                            if (input.name === "password") {
+                              handleKeyUpPW(e);
+                            }
+                            if (input.name === "email") {
+                              handleKeyUpEmail(e);
+                            }
+                          }}
+                          onChange={(e) =>
+                            setUserForm({
+                              ...userForm,
+                              [input.name]: e.target.value,
+                            })
+                          }
+                          className="registration__input"
+                        />
+                      </Form.Control>
+                      {input.name === "password" ||
+                      input.name === "confirmpw" ? (
+                        <IconButton
+                          type="button"
+                          className="registration__reveal-btn"
+                          onClick={() =>
+                            setReveal({
+                              ...reveal,
+                              [input.name]: !reveal[input.name],
+                            })
+                          }
+                        >
+                          {reveal[input.name] ? <PiEye /> : <PiEyeClosed />}
+                        </IconButton>
+                      ) : (
+                        ""
+                      )}
+                      <Form.Label
+                        className={`registration__input-label ${
+                          userForm[input.name].length > 0 && "input__hasValue"
+                        } ${!isPasswordValid && "label__password-invalid"}`}
+                      >
+                        {input.title}
+                      </Form.Label>
+                    </Flex>
+                    <Box style={{ marginBlock: "0.1rem .6rem" }}>
+                      {input.name === "password" &&
+                        !isPasswordValid &&
+                        userForm.password.length > 0 && (
+                          <Text className="registration__err-msg-pw">
+                            Password should be at least 8 characters and must
+                            contain at least 1 lowercase letter, 1 uppercase
+                            letter, a number, and a special characrer
+                          </Text>
+                        )}
+                      {input.name === "email" &&
+                        !isEmailValid &&
+                        userForm.email.length > 0 && (
+                          <Text className="registration__err-msg-pw">
+                            Provide a valid email address
+                          </Text>
+                        )}
+
+                      {input.name === registrationError.field && (
+                        <Text className="registration__input-message">
+                          {registrationError.message}
+                        </Text>
+                      )}
+                      <Form.Message
+                        match="patternMismatch"
+                        className="registration__input-message"
+                      >
+                        {input.errorMessage}
+                      </Form.Message>
+                      <Form.Message
+                        match="valueMissing"
+                        className="registration__input-message"
+                      >
+                        Please enter a valid {input.title}.
+                      </Form.Message>
+                    </Box>
+                  </Form.Field>
+                ))}
+              <Form.Submit asChild>
+                <button
+                  className="registration__submit-btn"
+                  onClick={handleOnSubmit}
+                >
+                  Create Account
+                </button>
+              </Form.Submit>
+              <Box className="registration__login-btn-ctn">
+                <RLink href="/login" className="registration__login-btn">
+                  Login Instead
+                </RLink>
+              </Box>
+            </Form.Root>
+          </Box>
+        </Section>
+      </Box>
+    </Container>
   );
 }
 

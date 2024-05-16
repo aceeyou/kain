@@ -2,7 +2,6 @@
 
 :root {
   --primary: #f04134;
-  --secondary: #fbd67e;
   --offwhite: #f6ede1;
   --ashblack: #4d4d4d;
   --text: #000;
@@ -11,9 +10,23 @@
   --placeholder: #aaa;
 
   --desktop-screen: 900px;
-  --rounded: 3px;
 
-  font-family: "Outfit", system-ui, Helvetica, Arial, sans-serif;
+  --background: #ebeff2;
+  --foreground: #050620;
+  --muted: #a6a9b3;
+  --accent: #ff4a1c;
+  --secondary: #febc2e;
+  --tertiary: #758bfd;
+  --warning: #e04255;
+  --button-primary: #050620;
+  --button-secondary: #a6a9b3;
+  --button-muted: #d9d9d9;
+  --button-file: #ff4a1c;
+  --rounded-sm: 3px;
+  --rounded-md: 5px;
+  --rounded-lg: 10px;
+
+  font-family: "Outfit", system-ui, Helvetica, sans-serif;
   line-height: 1.15;
   font-weight: 400;
 
@@ -63,6 +76,7 @@
 
 body {
   background-color: var(--offwhite);
+  font-family: "Krona One";
 }
 
 input {
@@ -110,5 +124,35 @@ option {
 }
 
 .sr-only {
+  display: none;
+}
+
+.radix-themes {
+  --default-font-family: "Outfit", sans-serif;
+  --heading-font-family: "Krona One", sans-serif;
+
+  --orange-9: var(--accent);
+  --yellow-9: var(--secondary);
+  --sky-12: var(--background);
+
+  --background: #ebeff2;
+  --foreground: #050620;
+  --muted: #a6a9b3;
+  --accent: #ff4a1c;
+  --secondary: #febc2e;
+  --tertiary: #758bfd;
+  --warning: #e04255;
+  --button-foreground: #ebeff2;
+  --button-primary: #050620;
+  --button-secondary: #a6a9b3;
+  --button-muted: #d9d9d9;
+  --button-file: #ff4a1c;
+  --rounded-sm: 3px;
+  --rounded-md: 5px;
+  --rounded-lg: 10px;
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
   display: none;
 }

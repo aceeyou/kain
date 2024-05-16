@@ -2,8 +2,18 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/userSlice";
 import InputField from "../components/InputField";
+import Logo from "../components/Logo";
+import { FC } from "react";
+
+import "./styles/Login.css";
+
+import CookingIllustration from "../assets/cooking.png";
 
 import axios from "axios";
+
+// RADIX
+import { Flex, Container, Text, Button, Link as RLink } from "@radix-ui/themes";
+import * as Form from "@radix-ui/react-form";
 
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +25,8 @@ interface LoginFormType {
 
 function Login() {
   // const user = useSelector((state) => state.login);
-  const [errPw, setErrPw] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errPw, setErrPw] = useState(false);
   const [viewPw, setViewPw] = useState("password");
   const dispatch = useDispatch();
   const [userForm, setUserForm] = useState<LoginFormType>({
@@ -28,7 +39,7 @@ function Login() {
       id: 3,
       name: "username",
       label: "Username",
-      errorMessage: "Username must be atleast 4 characters long",
+      errorMessage: "Username does not exist. Try again",
       type: "text",
       required: true,
       title: "Username",
@@ -37,7 +48,7 @@ function Login() {
       id: 4,
       name: "password",
       label: "Password",
-      errorMessage: "Password is not correct",
+      errorMessage: errPw,
       type: viewPw,
       required: true,
       title: "Password",
@@ -54,64 +65,144 @@ function Login() {
   }
 
   async function handleOnSubmit(e: any) {
+    if (userForm.username == "" || userForm.password == "") return;
     e.preventDefault();
 
     // send to backend server
-    await axios
-      .post(
-        "http://127.0.0.1:8080/login",
-        {
-          username: userForm.username,
-          password: userForm.password,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log("login res: ", res);
-        if (res.data === "Incorrect password. Try again") {
-          setErrPw("Incorrect password. Try again.");
-        } else {
-          dispatch(
-            login({
-              fullname: res.data.fullname,
-              user: res.data,
-            })
-          );
-          setUserForm({
-            username: "",
-            password: "",
-          });
-          navigate(`/`);
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      setLoading(true);
+      await axios
+        .post(
+          "http://127.0.0.1:8080/login",
+          {
+            username: userForm.username,
+            password: userForm.password,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          if (res.status === 204) {
+            setErrPw(true);
+            setLoading(false);
+          } else {
+            dispatch(
+              login({
+                fullname: res.data.fullname,
+                user: res.data,
+              })
+            );
+            setUserForm({
+              username: "",
+              password: "",
+            });
+            setLoading(false);
+            navigate(`/`);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
-    <div className="login-page">
-      <section className="login__container">
-        <form
-          method="POST"
-          className="loginForm"
-          onSubmit={handleOnSubmit}
-          name="loginForm"
-        >
-          <h1 className="h1 login__logo">kain</h1>
-          {inputs.map((input) => (
-            <InputField
-              key={input.id}
-              {...input}
-              value={userForm[input.name]}
-              onChange={handleInputChange}
-              handleViewPw={handleViewPw}
-            />
+    <Container
+      size="1"
+      align="center"
+      maxWidth="300px"
+      py="9"
+      id="login__container"
+    >
+      <Logo size="9" align="center" style={{ marginBottom: "1.5rem" }} />
+      <Flex align={"center"}>
+        <img
+          src={CookingIllustration}
+          loading="lazy"
+          width={"60%"}
+          style={{
+            marginTop: "10px",
+            marginBottom: "2rem",
+            marginInline: "auto",
+          }}
+          alt="Illustration of a man cooking"
+        />
+      </Flex>
+      <Form.Root onSubmit={handleOnSubmit} method="POST">
+        {/* error message */}
+        {errPw && (
+          <Text
+            align="center"
+            as="p"
+            style={{
+              marginBottom: "1rem",
+              color: "var(--accent)",
+              fontSize: ".85rem",
+            }}
+          >
+            Incorrect username or password. Try again.
+          </Text>
+        )}
+        {/* username */}
+        {!!inputs &&
+          inputs.map((input, index) => (
+            <Form.Field name="username" key={index}>
+              <Flex direction="column">
+                <Form.Control asChild>
+                  <InputField
+                    key={input.id}
+                    {...input}
+                    value={userForm[input.name]}
+                    onChange={handleInputChange}
+                    handleViewPw={handleViewPw}
+                    handleOnSubmit={handleOnSubmit}
+                  />
+                </Form.Control>
+              </Flex>
+            </Form.Field>
           ))}
-          {errPw && <p className="login__err-msg">{errPw}</p>}
-          <button className="login__submit-btn">Log in</button>
-        </form>
-      </section>
-    </div>
+        <RLink
+          href="#"
+          className="forgot-password"
+          style={{
+            textAlign: "end",
+            display: "block",
+            fontSize: ".8rem",
+            marginBlock: "0 1rem",
+          }}
+        >
+          Forgot Password?
+        </RLink>
+
+        {/* login button */}
+        <Form.Submit asChild>
+          <Button
+            loading={loading}
+            disabled={loading || userForm.password.length < 8}
+            variant="solid"
+            color="orange"
+            size="2"
+            style={{ width: "100%", paddingBlock: "1.2rem" }}
+          >
+            <Text size="3" style={{ color: "white" }}>
+              Login
+            </Text>
+          </Button>
+        </Form.Submit>
+        <RLink
+          href="/register"
+          style={{
+            display: "block",
+            fontSize: ".85rem",
+            color: "var(--foreground)",
+            textAlign: "center",
+            marginTop: "1rem",
+            cursor: "pointer",
+          }}
+        >
+          Create Account
+        </RLink>
+      </Form.Root>
+    </Container>
   );
 }
 

@@ -69,7 +69,8 @@ function Profile() {
         {
           userId: user._id,
           image: file,
-        }
+        },
+        { withCredentials: true }
       );
       if (res) {
         setImage(res.data.profilePicture);

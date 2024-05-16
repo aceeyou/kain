@@ -35,6 +35,7 @@ export async function getUserWithID(id) {
 // create user
 export async function registerUser(fullname, email, username, password) {
   // hash password
+  console.log(email);
   const result = await pool.query(
     `
         INSERT INTO users (fullname, email, username, password)
@@ -42,9 +43,11 @@ export async function registerUser(fullname, email, username, password) {
     `,
     [fullname, email, username, password]
   );
-  const new_id = result.insertId;
-  const query = getUserWithID(new_id);
-  return query;
+  const new_id = result[0].insertId;
+  const query = await getUserWithID(new_id);
+  if (query) {
+    return query;
+  }
 }
 
 export async function updateProfilePicture(id, image_url) {
@@ -70,13 +73,13 @@ export async function loginUser(username, password) {
   const result = login[0][0];
 
   if (!result) {
-    return `User ${username} does not exist.`;
+    return { error: `User ${username} does not exist.` };
   }
 
   const hashMatch = await bcrypt.compare(password, result.password);
 
   if (!hashMatch) {
-    return "Incorrect password. Try again";
+    return { error: "Incorrect password. Try again" };
   }
   return await getUserWithID(result._id);
 }
@@ -120,18 +123,23 @@ async function addRecipeCount(userId) {
 }
 
 export async function setRecipeIngredients(recipeId, ingredients) {
-  ingredients?.map(async (ingredient) => {
-    try {
+  try {
+    for (let i = 0; i < ingredients.length; i++) {
       await pool.query(
         `
-          INSERT INTO ingredients (recipe_id, ingredient, quantity, unit) VALUES (?, ?, ?, ?)
-        `,
-        [recipeId, ingredient.ingredient, ingredient.quantity, ingredient.unit]
+            INSERT INTO ingredients (recipe_id, ingredient, quantity, unit) VALUES (?, ?, ?, ?)
+          `,
+        [
+          recipeId,
+          ingredients[i].ingredient,
+          Number(ingredients[i].quantity),
+          ingredients[i].unit,
+        ]
       );
-    } catch (error) {
-      console.log(error);
     }
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function setRecipeSteps(recipeId, steps) {
@@ -211,17 +219,18 @@ export async function emailExistsChecker(email) {
   `,
     [email]
   );
-  if (emailExists.length > 0) return true;
-  else return false;
+  console.log(emailExists[0]);
+  if (emailExists[0].length > 0) return true;
+  return false;
 }
 
 export async function usernameExistsChecker(username) {
-  const emailExists = await pool.query(
+  const usernameExists = await pool.query(
     `
     SELECT username FROM users WHERE username = ?
   `,
     [username]
   );
-  if (emailExists.length > 0) return true;
+  if (usernameExists[0].length > 0) return true;
   else return false;
 }

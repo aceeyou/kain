@@ -1,17 +1,25 @@
-// interface PropType {
-//   name: string;
-//   label: string;
-//   inputType: string;
-//   value: string;
-//   onChange: any | null;
-//   pattern?: string;
-//   error_msg?: string | null;
-// }
+interface PropType {
+  [key: string]: string;
+  id: number;
+  name: string;
+  label: string;
+  errorMessage?: string;
+  type: string;
+  required?: boolean | undefined;
+  title?: string | undefined;
+  value: string;
+  onChange: any | null | ((e: any) => void | undefined);
+  pattern?: string | undefined;
+  error_msg?: string | null | undefined;
+
+  handleViewPw?: ((e: any) => void | undefined) | undefined;
+  handleOnSubmit?: ((e: any) => void | undefined) | undefined;
+}
 
 import { useState } from "react";
 import { PiEye, PiEyeClosed } from "react-icons/pi";
 
-function InputField(props: any) {
+function InputField(props: PropType) {
   const [focused, setFocused] = useState(false);
   const {
     name,
@@ -20,6 +28,7 @@ function InputField(props: any) {
     errorMessage,
     value,
     handleViewPw,
+    handleOnSubmit,
     ...inputOptions
   } = props;
   return (
@@ -39,13 +48,10 @@ function InputField(props: any) {
           focused={focused.toString()}
           autoComplete="false"
           autoCapitalize={`
-            ${
-              inputOptions.name === "fullname" &&
-              inputOptions.name !== "username"
-                ? "true"
-                : "false"
-            }
+          ${name === "fullname" ? "true" : "false"}
           `}
+          tabIndex={1}
+          onKeyDown={(e) => e.key === "Enter" && handleOnSubmit(e)}
         />
         <label
           htmlFor={name}
@@ -53,21 +59,24 @@ function InputField(props: any) {
         >
           {label}
         </label>
-        {name === "password" && (
-          <button
-            className="password__view-btn"
-            tabIndex={-1}
-            onClick={handleViewPw}
-          >
-            {props.type === "password" ? (
-              <PiEyeClosed size={20} />
-            ) : (
-              <PiEye size={20} />
-            )}
-          </button>
-        )}
       </div>
-      <p className="inputfield__error-message">{errorMessage}</p>
+      {name === "password" && (
+        <button
+          type="button"
+          className="password__view-btn"
+          onClick={handleViewPw}
+          tabIndex={1}
+        >
+          {props.type === "password" ? (
+            <PiEyeClosed size={20} />
+          ) : (
+            <PiEye size={20} />
+          )}
+        </button>
+      )}
+      {value.length > 0 && (
+        <p className="inputfield__error-message">{errorMessage}</p>
+      )}
     </div>
   );
 }

@@ -95,12 +95,25 @@ app.post("/register", async (req, res) => {
   const hashedPassword = await hashPassword(password);
   try {
     if (!(fullname && email && username && password)) {
-      res.status(400).send("All fileds should be filled");
+      console.log("field should be filled");
+      res.status(409).send("All fileds should be filled");
+      return;
     }
-    if (emailExistsChecker(email)) res.status(403).send("Email already in use");
-
-    if (usernameExistsChecker(username))
-      res.status(403).send("Username already taken");
+    if (await emailExistsChecker(email)) {
+      res.status(409).send({
+        field: "email",
+        message: "This email address has been taken",
+      });
+      return;
+    } else {
+      if (await usernameExistsChecker(username)) {
+        res.status(409).send({
+          field: "username",
+          message: "This username has been taken",
+        });
+        return;
+      }
+    }
 
     const register = await registerUser(
       fullname,
@@ -108,7 +121,9 @@ app.post("/register", async (req, res) => {
       username,
       hashedPassword
     );
-    res.status(201).send(register);
+    if (register) {
+      res.status(201).send(register);
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -117,6 +132,9 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await loginUser(username, password);
+  if (!!user.error) {
+    return res.status(204).send(user.error);
+  }
   const userToken = {
     id: user._id,
     username: username,

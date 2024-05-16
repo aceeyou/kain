@@ -1,0 +1,104 @@
+.registration__container {
+  max-width: 330px;
+  min-height: 100svh;
+  margin-inline: auto;
+  padding-top: 4rem;
+}
+
+.registration__subheading {
+  font-size: 1.25rem;
+  color: var(--foreground);
+}
+
+.registration__description {
+  font-size: 0.8rem;
+  line-height: 1.2;
+  color: var(--foreground);
+  opacity: 0.85;
+  margin-block: 5px 20px;
+}
+
+.registration__input-group {
+  background-color: white;
+  border-radius: var(--rounded-lg);
+  overflow: hidden;
+  position: relative;
+  padding: 11px 15px;
+}
+
+.registration__input-group:not(:has(input[name="confirmpw"])) {
+  /* margin-bottom: 0.875rem; */
+}
+
+.registration__input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 3px 0;
+  font-size: 1rem;
+  transition: transform 200ms;
+}
+
+.registration__input-label {
+  position: absolute;
+  transition: all 200ms;
+}
+
+.registration__input-message,
+.registration__err-msg-pw {
+  color: var(--warning);
+  font-size: 0.825rem;
+  display: block;
+  text-align: right;
+}
+
+.registration__input:focus,
+.registration__input:valid,
+.registration__input:invalid {
+  transform: translateY(7px);
+}
+
+.registration__input:focus + .registration__input-label,
+.registration__input:valid + .registration__input-label,
+.input__hasValue {
+  transform: translateY(-8px);
+  font-size: 0.625rem;
+  opacity: 0.7;
+}
+
+/* .registration__input:invalid + .registration__input-label,
+.label__password-invalid {
+  color: red;
+} */
+
+.registration__submit-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding-block: 10px;
+  outline: none;
+  border: none;
+  border-radius: var(--rounded-lg);
+  background-color: var(--button-primary);
+  color: var(--button-foreground);
+  font-weight: 700;
+  font-size: 1.06rem;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+}
+
+.registration__login-btn-ctn {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.registration__login-btn {
+  color: var(--foreground);
+  font-size: 0.85rem;
+}
+
+.registration__reveal-btn {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  background-color: transparent;
+}

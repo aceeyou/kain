@@ -1,6 +1,10 @@
 import React, { createContext, useContext } from "react";
 import ReactDOM from "react-dom/client";
 
+// radix ui theme
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
+
 import { Provider } from "react-redux";
 import store from "./App/store";
 // import users from "./pages/redux_logic/users";
@@ -17,10 +21,7 @@ import Login from "./pages/Login.tsx";
 import Profile from "./pages/Profile.tsx";
 import AddRecipe from "./pages/AddRecipe.tsx";
 
-import axios from "axios";
 import Recipe from "./pages/Recipe.tsx";
-
-axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
     errorElement: <PageNotFound />,
   },
   {
-    path: "/signup",
+    path: "/register",
     element: <UserRegistration />,
   },
   {
@@ -59,7 +60,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
       {/* <Context.Provider value={user}> */}
-      <RouterProvider router={router} />
+      <Theme style={{ backgroundColor: "var(--background)" }}>
+        <RouterProvider router={router} />
+      </Theme>
       {/* </Context.Provider> */}
     </Provider>
   </React.StrictMode>
