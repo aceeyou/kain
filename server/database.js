@@ -180,6 +180,15 @@ export async function updateRecipeImageURL(recipeId, url) {
   }
 }
 
+export async function getAllRecipes() {
+  const recipes = await pool.query(
+    `
+    SELECT * FROM recipes;
+    `
+  );
+  return recipes[0];
+}
+
 export async function getRecipesOfUser(id) {
   const result = await pool.query(
     `
@@ -232,5 +241,5 @@ export async function usernameExistsChecker(username) {
     [username]
   );
   if (usernameExists[0].length > 0) return true;
-  else return false;
+  return false;
 }

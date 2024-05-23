@@ -21,6 +21,7 @@ import {
   getRecipeOfId,
   getIngredientsForRecipe,
   getStepsForRecipe,
+  getAllRecipes,
 } from "./database.js";
 
 // import { cloudinary } from "./helpers/cloudinary";
@@ -131,9 +132,16 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  const isUsernameExists = await usernameExistsChecker(username);
+
+  // Check if username exists in the user database
+  if (!isUsernameExists)
+    return res.status(401).send(`User ${username} does not exist`);
+
+  // if username exists, try to login
   const user = await loginUser(username, password);
   if (!!user.error) {
-    return res.status(204).send(user.error);
+    return res.status(401).send(user.error);
   }
   const userToken = {
     id: user._id,
@@ -222,6 +230,17 @@ app.post("/addrecipe", authenticateToken, async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+});
+
+app.get("/recipes", authenticateToken, async (req, res) => {
+  const result = await getAllRecipes();
+  try {
+    if (result) {
+      return res.status(201).send(result);
+    }
+  } catch (error) {
+    return res.status(401).send("Request denied");
   }
 });
 

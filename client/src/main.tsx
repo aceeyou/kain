@@ -60,7 +60,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
       {/* <Context.Provider value={user}> */}
-      <Theme style={{ backgroundColor: "var(--background)" }}>
+      <Theme
+        accentColor="var(--foreground)"
+        style={{ backgroundColor: "var(--background)" }}
+      >
         <RouterProvider router={router} />
       </Theme>
       {/* </Context.Provider> */}

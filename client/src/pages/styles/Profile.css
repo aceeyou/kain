@@ -2,54 +2,15 @@
   min-height: 100svh;
   max-width: 700px;
   margin-inline: auto;
-
-  header {
-    padding: 60px 15px 0px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    nav {
-      width: fit-content;
-      ul {
-        display: flex;
-        list-style: none;
-        gap: 1.25rem;
-        align-items: center;
-        justify-content: flex-end;
-
-        li {
-          display: block;
-          display: grid;
-          place-items: center;
-          width: 27px;
-          aspect-ratio: 1 / 1;
-          cursor: pointer;
-
-          &:nth-child(1) {
-            background-color: var(--secondary);
-            border-radius: 50%;
-          }
-
-          &:nth-child(2),
-          &:nth-child(3) {
-            border: 1.25px solid black;
-            border-radius: 50%;
-          }
-        }
-      }
-    }
-  }
 }
 
 .profile__container {
   display: flex;
-  margin-top: 20px;
+  margin-top: 0px;
   padding-inline: 15px;
 
   .profile__display-picture {
-    width: 60px;
+    width: 80px;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     box-shadow: 0 2px 8px #c7c7c7;
@@ -123,35 +84,44 @@
   }
 }
 
-.posts {
-  margin-top: 1.875rem;
-  .post__navigation {
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    border-bottom: 0.3px solid var(--placeholder);
-    div {
-      padding-bottom: 4px;
-      cursor: pointer;
-      width: 100%;
-      text-align: center;
-    }
+/* margin-top: 1.875rem; */
+.posts__navigation {
+  padding-inline: var(--inline-margin);
+  margin-bottom: 10px;
+  .posts__nav-item {
+    padding-bottom: 2px;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--muted);
+    border: none;
+    background-color: transparent;
   }
 
-  .posts__recipes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+  .posts__nav-item:nth-child(1) {
+    margin-right: 12px;
+  }
 
-    div {
-      margin: 0;
-      padding: 0;
-      cursor: pointer;
-      img {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-      }
+  .posts__nav-item.active {
+    font-weight: 600;
+    color: var(--foreground);
+    border-bottom: 1px solid var(--foreground);
+  }
+}
+
+.posts__recipes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  padding-inline: var(--inline-margin);
+
+  div {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
     }
   }
 }

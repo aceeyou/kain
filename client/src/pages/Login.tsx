@@ -27,6 +27,9 @@ function Login() {
   // const user = useSelector((state) => state.login);
   const [loading, setLoading] = useState(false);
   const [errPw, setErrPw] = useState(false);
+  const [errUser, setErrUser] = useState(
+    "Incorrect username or password. Try again."
+  );
   const [viewPw, setViewPw] = useState("password");
   const dispatch = useDispatch();
   const [userForm, setUserForm] = useState<LoginFormType>({
@@ -82,11 +85,8 @@ function Login() {
             withCredentials: true,
           }
         )
-        .then((res) => {
-          if (res.status === 204) {
-            setErrPw(true);
-            setLoading(false);
-          } else {
+        .then((res: any) => {
+          if (res.status === 201) {
             dispatch(
               login({
                 fullname: res.data.fullname,
@@ -101,8 +101,13 @@ function Login() {
             navigate(`/`);
           }
         });
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error?.response?.status === 401) {
+        setLoading(false);
+        setErrPw(true);
+        setErrUser(error?.response?.data);
+        return;
+      }
     }
   }
   return (
@@ -113,7 +118,12 @@ function Login() {
       py="9"
       id="login__container"
     >
-      <Logo size="9" align="center" style={{ marginBottom: "1.5rem" }} />
+      <Logo
+        size="9"
+        align="center"
+        className=""
+        style={{ marginBottom: "1.5rem" }}
+      />
       <Flex align={"center"}>
         <img
           src={CookingIllustration}
@@ -139,7 +149,7 @@ function Login() {
               fontSize: ".85rem",
             }}
           >
-            Incorrect username or password. Try again.
+            {errUser}
           </Text>
         )}
         {/* username */}

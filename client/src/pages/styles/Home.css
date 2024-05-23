@@ -1,0 +1,139 @@
+.home__container {
+  max-width: 380px;
+  margin-inline: auto;
+  padding-bottom: 100px;
+}
+
+.home__menubar {
+  display: flex;
+  align-items: center;
+  padding: 60px var(--inline-margin) 20px;
+}
+
+.home__ul-list-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.home__li:nth-child(2) {
+  margin-inline: 15px;
+}
+
+.home__shopping-bag {
+  position: relative;
+}
+
+.home__li-btn {
+  background: none;
+  border: none;
+
+  /* outline: none; */
+}
+
+.home__li-btn svg {
+  transition: 200ms;
+}
+
+.home__li-btn svg path {
+  color: var(--foreground);
+}
+
+.home__li-btn svg:hover {
+  color: var(--tertiary);
+  scale: 1.06;
+}
+
+.home__avatar-img {
+  width: 40px;
+  aspect-ratio: 1 / 1;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.home__badge {
+  position: absolute;
+  bottom: -3px;
+  right: -5px;
+  font-size: 0.6rem !important;
+  padding: 1px 6px;
+  z-index: 9;
+}
+
+.home__avatar-fallback {
+  background-color: var(--box-bg);
+  color: var(--foreground);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 41px;
+  aspect-ratio: 1 / 1;
+  border-radius: 100%;
+}
+
+.home__scrollable {
+  overflow: hidden !important;
+}
+
+.home__scrollable::-webkit-scrollbar {
+  display: none !important;
+}
+
+.home__scrollable-btn-item {
+  cursor: pointer;
+}
+
+.home__scrollable-btn-item:not(:nth-child(1)) {
+  background-color: var(--box-bg);
+}
+
+.home__scrollable-btn-item:nth-child(1) {
+  margin-left: var(--inline-margin);
+}
+
+.home__scrollable-btn-item {
+  margin-right: 8px;
+}
+
+.home__scrollable-btn-item:last-of-type {
+  margin-right: 60px;
+}
+
+.home__active-category {
+  background-color: var(--accent) !important;
+  color: var(--background) !important;
+}
+
+.home__popular-recipes .recipe__container:nth-child(1) {
+  margin-left: var(--inline-margin);
+}
+
+.home__popular-recipes {
+  gap: 6px;
+}
+
+.home__popular-recipes .recipe__container:last-of-type {
+  margin-right: 30px;
+}
+
+h2.home__recipe-heading {
+  margin-bottom: 0.5rem;
+  padding-left: var(--inline-margin);
+  font-weight: 500;
+}
+
+.home__discover-recipes {
+  margin-inline: var(--inline-margin);
+  gap: 0.5rem;
+
+  .recipe__container {
+    width: 100% !important;
+    height: 220px !important;
+  }
+}
+
+.rt-ScrollAreaScrollbar {
+  display: none;
+}

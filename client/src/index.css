@@ -13,6 +13,7 @@
 
   --background: #ebeff2;
   --foreground: #050620;
+  --box-bg: #fdfdfd;
   --muted: #a6a9b3;
   --accent: #ff4a1c;
   --secondary: #febc2e;
@@ -25,6 +26,9 @@
   --rounded-sm: 3px;
   --rounded-md: 5px;
   --rounded-lg: 10px;
+  --rounded-xl: 16px;
+  --inline-margin: 15px;
+  --button-shadow: 0 2px 4px -1.5px var(--muted);
 
   font-family: "Outfit", system-ui, Helvetica, sans-serif;
   line-height: 1.15;
@@ -54,10 +58,14 @@
   color: var(--text);
 }
 
-/* WebKit browsers */
-::-webkit-input-placeholder {
-  color: transparent;
+::-webkit-scrollbar {
+  display: none !important;
 }
+
+/* WebKit browsers */
+/* ::-webkit-input-placeholder {
+  color: transparent;
+} */
 /* Mozilla Firefox 4 to 18 */
 /* :-moz-placeholder {
   color: transparent;
@@ -77,6 +85,9 @@
 body {
   background-color: var(--offwhite);
   font-family: "Krona One";
+
+  -ms-overflow-style: none m !important; /* IE and Edge */
+  scrollbar-width: none m !important;
 }
 
 input {
@@ -127,9 +138,12 @@ option {
   display: none;
 }
 
+.rt-ScrollAreaScrollbar {
+  display: none !important;
+}
+
 .radix-themes {
   --default-font-family: "Outfit", sans-serif;
-  --heading-font-family: "Krona One", sans-serif;
 
   --orange-9: var(--accent);
   --yellow-9: var(--secondary);

@@ -1,0 +1,55 @@
+.pagenav__menubar {
+  margin-block: 25px;
+  padding-inline: var(--inline-margin);
+}
+
+.pagenav__ul-list-container {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pagenav__li {
+  display: grid;
+  place-items: center;
+  border-radius: var(--rounded-sm);
+  overflow: hidden;
+}
+
+.pagenav__li:not(:has(.pagenav__back)):not(:last-of-type) {
+  margin-right: 12px;
+}
+
+.pagenav__li:has(.pagenav__back) {
+  margin-right: auto;
+}
+
+.pagenav__li-btn {
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+}
+
+.pagenav__li-btn-link {
+  display: flex !important;
+}
+
+.pagenav__back {
+  background-color: var(--button-muted);
+  padding: 4px;
+}
+
+.pagenav__add-post {
+}
+
+.pagenav__favorites {
+}
+
+.pagenav__allergies {
+}
+
+.pagenav__settings {
+}

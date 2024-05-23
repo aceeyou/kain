@@ -36,7 +36,7 @@ function InputField(props: PropType) {
       <div className="inputfield__input-container">
         <input
           name={name}
-          placeholder={name}
+          // placeholder={name}
           className="inputfield__input"
           {...inputOptions}
           onChange={onChange}

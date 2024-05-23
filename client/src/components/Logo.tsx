@@ -12,7 +12,12 @@ function Logo({ size, style, className, align }: PropType) {
     <Heading
       color="orange"
       size={size}
-      style={{ ...style, color: "var(--accent)", letterSpacing: "-5px" }}
+      style={{
+        color: "var(--accent)",
+        letterSpacing: "-5px",
+        fontFamily: "Krona One, serif",
+        ...style,
+      }}
       className={className}
       align={align}
     >

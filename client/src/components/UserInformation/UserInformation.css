@@ -1,0 +1,108 @@
+.userInfo__container {
+  display: flex;
+  margin-top: 0px;
+  padding-inline: 15px;
+
+  .userInfo__display-picture {
+    width: 80px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px #c7c7c7;
+    cursor: pointer;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  .userInfo__left-container {
+    flex: 2.5;
+  }
+
+  .userInfo__right-container {
+    flex: 5.5;
+    display: flex;
+    flex-direction: column;
+    padding-block: 10px 0;
+
+    .top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      .userInfo__user {
+        .userInfo__user-name {
+          font-size: 1.125rem;
+          font-weight: 700;
+        }
+        .userInfo__user-username {
+          width: min-content;
+          margin-block: 3px 5px;
+          font-size: 0.725rem;
+          color: var(--foreground);
+          padding: 2px 12px;
+          background-color: var(--secondary);
+          border-radius: var(--rounded-lg);
+        }
+        .userInfo__metrics {
+          display: flex;
+          flex-direction: row;
+          margin-top: 4px;
+
+          p.recipes,
+          p.followers,
+          span {
+            font-size: 0.725rem;
+            color: var(--foreground);
+          }
+
+          span {
+            margin-inline: 6px;
+          }
+        }
+      }
+
+      .userInfo__edit-btn-container {
+        button {
+          background-color: var(--button-muted);
+          padding: 4px 16px;
+          font-size: 0.825rem;
+          border-radius: var(--rounded-xl);
+          border: none;
+          box-shadow: var(--button-shadow);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+/* Avatar styling */
+.userInfo__avatar-img {
+  width: 80px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.userInfo__avatar-fallback {
+  width: 80px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--foreground);
+  border-radius: 100%;
+  background-color: var(--box-bg);
+}
+
+.userInfo__bio {
+  padding-inline: var(--inline-margin);
+
+  p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    letter-spacing: 0.015rem;
+  }
+}
