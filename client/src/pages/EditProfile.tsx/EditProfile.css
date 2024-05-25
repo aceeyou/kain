@@ -1,0 +1,203 @@
+.edit__form-container {
+  margin-top: 20px;
+  padding-inline: var(--inline-margin);
+}
+
+.edit__section {
+  background-color: var(--semi-white);
+  padding: 15px 12px;
+  border-radius: var(--rounded-md);
+  margin-bottom: 15px;
+}
+
+.edit__form-field {
+  margin-bottom: 10px;
+}
+
+.edit__form-label {
+  font-size: 0.875rem;
+  margin-bottom: 5px;
+}
+
+.edit__form-input,
+.edit__form-textarea {
+  display: block;
+  width: 100%;
+  padding: 4px 12px;
+  border: 1.5px solid #d4d4d4;
+  border-radius: var(--rounded-sm);
+  background-color: var(--offwhite);
+}
+
+.edit__form-textarea {
+  padding: 0;
+}
+
+.edit__form-input:focus,
+.edit__form-textarea {
+  outline: 1.2px solid var(--foreground);
+}
+
+.edit__form-err-msg {
+}
+
+.allergy-select__container {
+  width: 100%;
+  background-color: var(--offwhite);
+  padding: 5px 8px;
+  border-radius: var(--rounded-sm);
+  cursor: pointer;
+  box-shadow: var(--button-shadow);
+}
+
+.allergy__text {
+  max-width: 250px;
+  height: 22px;
+  padding-inline: 2px 5px;
+}
+
+.dialog__overlay {
+  background-color: var(--black-a9);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog__content {
+  font-family: " Outfit ", sans-serif;
+  background-color: var(--offwhite);
+  border-radius: var(--rounded-lg);
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: calc(var(--max-width) - var(--inline-margin) * 2);
+  padding: var(--inline-margin);
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog__title-ctn {
+  align-items: center;
+  svg path {
+    color: var(--muted);
+  }
+
+  h1 {
+    font-family: "Outfit";
+    font-size: 1.125rem;
+    margin-left: 10px;
+  }
+}
+
+.dialog__description {
+  margin-block: 8px 20px;
+  span {
+    font-size: 0.875rem;
+    color: #413c58;
+  }
+}
+
+/* .dialog__allergy-input { */
+.fieldset {
+  border-radius: var(--rounded-md);
+  overflow: hidden;
+  display: flex;
+  border: 1.2px solid #d4d4d4;
+
+  input {
+    width: 100%;
+    padding: 5px 15px;
+    outline: none;
+    border: none;
+  }
+  .add-allergy-btn {
+    width: auto;
+    background-color: var(--foreground);
+    padding: 10px 15px;
+
+    svg path {
+      color: var(--white);
+    }
+  }
+}
+
+.dialog__existing-allergies {
+  margin-block: 20px;
+  p.existing-allergy-title {
+    font-size: 0.875rem;
+    font-family: "Outfit";
+    margin-bottom: 10px;
+  }
+
+  .flex-allergies {
+    gap: 6px;
+    margin-bottom: 3rem;
+  }
+
+  p.allergy {
+    padding: 6px 12px;
+    background-color: var(--button-muted);
+    font-family: "Outfit";
+    font-size: 0.925rem;
+    border-radius: var(--rounded-sm);
+  }
+}
+
+.dialog__buttons {
+  gap: 6px;
+  button {
+    font-family: "Outfit", sans-serif;
+    padding: 8px 20px;
+    border: 1.4px solid #ccc;
+    border-radius: var(--rounded-md);
+    cursor: pointer;
+  }
+
+  button.allergies-save-btn {
+    background-color: var(--button-primary);
+    color: var(--white);
+  }
+}
+
+.darkmode-switch {
+  transform-origin: left;
+  transition: 150ms;
+}
+
+.darkmode-switch[data-state="checked"] {
+  background-color: var(--foreground);
+  border-radius: 20px;
+}
+
+.logout-btn {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  color: var(--warning);
+}
+
+/* } */
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

@@ -109,8 +109,12 @@ function UserInformation({ user }: PropTypes) {
                 <p className="followers">{user?.follower_count} followers</p>
               </div>
             </div>
-            <Link to={"/"} className="userInfo__edit-btn-container">
-              <button>Edit Profile</button>
+            <Link
+              tabIndex={1}
+              to={"/edit-profile"}
+              className="userInfo__edit-btn-container"
+            >
+              Edit Profile
             </Link>
           </div>
         </Section>

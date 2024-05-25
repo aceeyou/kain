@@ -37,12 +37,20 @@
   display: flex !important;
 }
 
+.pagenav__li-btn-link svg path {
+  color: var(--foreground);
+}
+
+.pagenav__li-btn-link:focus {
+  outline: 2px solid var(--accent) !important;
+}
+
 .pagenav__back {
   background-color: var(--button-muted);
   padding: 4px;
 }
 
-.pagenav__add-post {
+.pagenav__add-post:focus {
 }
 
 .pagenav__favorites {

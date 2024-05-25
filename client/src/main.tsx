@@ -22,6 +22,7 @@ import Profile from "./pages/Profile.tsx";
 import AddRecipe from "./pages/AddRecipe.tsx";
 
 import Recipe from "./pages/Recipe.tsx";
+import EditProfile from "./pages/EditProfile.tsx/EditProfile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/edit-profile",
+    element: <EditProfile />,
   },
   {
     path: "/profile",

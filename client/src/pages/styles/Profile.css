@@ -1,7 +1,14 @@
 .container__profile-page {
   min-height: 100svh;
-  max-width: 700px;
+  max-width: var(--max-width);
+  min-width: var(--min-width);
   margin-inline: auto;
+}
+
+.filter__icon {
+  path {
+    color: var(--muted);
+  }
 }
 
 .profile__container {
@@ -85,20 +92,19 @@
 }
 
 /* margin-top: 1.875rem; */
-.posts__navigation {
+.posts__navigation-container {
   padding-inline: var(--inline-margin);
+}
+
+.posts__navigation {
   margin-bottom: 10px;
   .posts__nav-item {
     padding-bottom: 2px;
-    font-size: 0.85rem;
-    font-weight: 400;
+    font-size: 0.85rem !important;
+    font-weight: 400 !important;
     color: var(--muted);
     border: none;
     background-color: transparent;
-  }
-
-  .posts__nav-item:nth-child(1) {
-    margin-right: 12px;
   }
 
   .posts__nav-item.active {
@@ -130,4 +136,49 @@
   font-family: "Krona One";
   color: var(--primary);
   letter-spacing: -2px;
+}
+
+.minced-play-icon {
+  transform: translate(3px, 2px);
+  path {
+    color: var(--muted);
+  }
+}
+
+.minced-play-icon.active path {
+  color: var(--foreground);
+}
+
+/* Segmented Control resets */
+
+.rt-SegmentedControlRoot {
+  background-image: none !important;
+  background-color: transparent !important;
+}
+
+.rt-SegmentedControlItem,
+.rt-SegmentedControlItemLabelInactive {
+  width: max-content;
+}
+
+.rt-SegmentedControlItemLabelActive {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.rt-SegmentedControlItemLabelInactive {
+  color: var(--muted);
+}
+
+.rt-SegmentedControlItemLabel {
+  padding-inline: unset;
+  justify-content: unset;
+}
+
+.rt-SegmentedControlIndicator::before {
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  outline: none !important;
+  inset: unset !important;
 }
