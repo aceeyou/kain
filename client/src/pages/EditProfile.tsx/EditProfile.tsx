@@ -10,6 +10,7 @@ import {
   Flex,
   Heading,
   Section,
+  Spinner,
   Switch,
   Text,
 } from "@radix-ui/themes";
@@ -22,6 +23,7 @@ import FormField from "../../components/Forms/FormField/FormField";
 import AllergyDialog from "../../components/AllergyDialog/AllergyDialog";
 
 interface UserDataProps {
+  _id: number;
   fullname: string;
   username: string;
   bio: string;
@@ -36,11 +38,13 @@ function EditProfile() {
   const [allergyInput, setAllergyInput] = useState("");
   const [rawUserData, setRawUserData] = useState({ profilePicture: "" });
   const [editedData, setEditedData] = useState<UserDataProps>({
+    _id: 0,
     fullname: "",
     username: "",
     bio: "",
   });
   const [loadRawUserData, setLoadRawUserData] = useState(true);
+  const [isUploadingPicture, setIsUploadingPicture] = useState(false);
   const [image, setImage] = useState(rawUserData?.profilePicture || defaultDP);
 
   useEffect(() => {
@@ -95,6 +99,49 @@ function EditProfile() {
 
   const clickFileInput = () => fileRef?.current?.click();
 
+  const handleUploadProfilePicture = async (file: any) => {
+    setIsUploadingPicture(true);
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8080/uploadProfilePicture",
+        {
+          userId: editedData._id,
+          image: file,
+        },
+        { withCredentials: true }
+      );
+      if (res) {
+        setImage(res.data.profilePicture);
+        setIsUploadingPicture(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function handleImageChange(e: any) {
+    if (e?.target?.files.length > 0) {
+      const file: any = e?.target?.files[0];
+
+      transformFile(file);
+    } else return;
+  }
+
+  // transform images to base64
+  const transformFile = (file: any) => {
+    const reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        handleUploadProfilePicture(reader.result);
+        // console.log(reader.result);
+      };
+    } else {
+      setImage(defaultDP);
+    }
+  };
+
   return (
     <Container>
       <Navigation title="Edit Profile" />
@@ -116,10 +163,34 @@ function EditProfile() {
           type="file"
           name="newProfileImage"
           id="newProfileImage"
+          onChange={handleImageChange}
           onTouchCancel={() => setImage((current: any) => current)}
           className="sr-only"
         />
-        <Avatar size="7" radius="full" src={`${image}`} fallback={"A"} />
+        {isUploadingPicture ? (
+          <Box className="avatar__isLoading-container">
+            <Avatar
+              size="7"
+              radius="full"
+              src={`${image}`}
+              fallback={"A"}
+              className="avatar__isLoading-picture"
+              style={{ backgroundColor: "white" }}
+            />
+            <Spinner size="3" className="avatar__spinner" />
+          </Box>
+        ) : (
+          <Avatar
+            size="7"
+            radius="full"
+            src={`${image}`}
+            fallback={"A"}
+            style={{
+              backgroundColor: "white",
+              border: "1px solid var(--text)",
+            }}
+          />
+        )}
         <Text mt="3" size="2">
           Edit Picture
         </Text>

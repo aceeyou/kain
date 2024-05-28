@@ -5,9 +5,7 @@ import "./styles/Home.css";
 
 // react icons
 import { RiShoppingBasket2Fill } from "react-icons/ri";
-// import { RiShoppingBasket2Line } from "react-icons/ri";
 import { FaHeart } from "react-icons/fa";
-// import { FaRegHeart } from "react-icons/fa";
 
 // Radix
 import {
@@ -17,12 +15,10 @@ import {
   Button,
   Flex,
   Heading,
-  Box,
   Grid,
 } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Avatar from "@radix-ui/react-avatar";
-// import * as ScrollArea from "@radix-ui/react-scroll-area";
 
 // Components
 import Logo from "../components/Logo";
@@ -57,6 +53,10 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // get current theme (light mode or dark mode)
+    // const theme = window.matchMedia("(prefers-color-scheme: dark)");
+    // console.log(theme.matches);
+
     // LATER CHANGE TO FETCH USER DATA AND RECIPES
     async function verifyToken() {
       await axios
@@ -213,7 +213,12 @@ function Home() {
         <Flex gap="2" direction="row" className="home__popular-recipes">
           {!!recipes &&
             recipes.map((recipe: any, index: number) => (
-              <Recipe key={index} recipe={recipe} />
+              <Recipe
+                key={index}
+                recipe={recipe}
+                owner={false}
+                handleOnClick={() => {}}
+              />
             ))}
         </Flex>
       </ScrollArea>
@@ -224,7 +229,12 @@ function Home() {
       <Grid columns="2" gap="2" className="home__discover-recipes">
         {!!recipes &&
           recipes.map((recipe: any, index: number) => (
-            <Recipe key={index} recipe={recipe} />
+            <Recipe
+              key={index}
+              recipe={recipe}
+              owner={false}
+              handleOnClick={() => {}}
+            />
           ))}
       </Grid>
     </Container>

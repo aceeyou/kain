@@ -260,6 +260,24 @@ input[type="password"]::-ms-clear {
   }
 }
 
+.theme-dark {
+  --background: #010110;
+  --foreground: #ebeff2;
+  --section-container: #11103a;
+  --input-field-container: #070713;
+  --input-field-border: #413c58;
+  --box-bg: #11103a;
+  --tertiary: #758bfd;
+  --warning: #e04255;
+  --button-muted: #838389;
+  --button-primary: var(--accent);
+  --button-secondary: #413c58;
+  --dialog-btn-bg: #dfdfdf;
+  --shadow-color: #11103ade;
+
+  color-scheme: dark;
+}
+
 @media (prefers-color-scheme: dark) {
   .radix-themes {
     --background: #010110;

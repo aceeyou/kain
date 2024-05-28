@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 
 function App() {
   const user = useSelector(selectUser);
-  return <div>{user ? <Home /> : <Login />}</div>;
+  return <div className="theme-dark">{user ? <Home /> : <Login />}</div>;
 }
 
 export default App;

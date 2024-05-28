@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 
 // radix ui theme
@@ -66,7 +66,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Provider store={store}>
       {/* <Context.Provider value={user}> */}
       <Theme
-        accentColor="var(--foreground)"
+        accentColor={"var(--background)"}
         style={{ backgroundColor: "var(--background)" }}
       >
         <RouterProvider router={router} />

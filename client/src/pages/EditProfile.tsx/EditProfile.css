@@ -76,6 +76,21 @@
   color: var(--warning);
 }
 
+.avatar__isLoading-container {
+  position: relative;
+  border-radius: 100%;
+  background-color: rgb(175, 168, 168);
+}
+.avatar__isLoading-picture {
+  box-shadow: 0 0 100px 5px rgba(231, 225, 225, 0.829) inset;
+  opacity: 0.2;
+}
+.avatar__spinner {
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* } */
 
 @keyframes overlayShow {

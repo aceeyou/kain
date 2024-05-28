@@ -1,6 +1,7 @@
 import { Container as Ctn } from "@radix-ui/themes";
 
 function Container({ children }: any) {
+  // const theme = window.matchMedia("(prefers-color-scheme: dark)");
   return <Ctn style={styles.ctn}>{children}</Ctn>;
 }
 

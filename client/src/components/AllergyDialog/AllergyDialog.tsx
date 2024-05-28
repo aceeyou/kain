@@ -101,8 +101,8 @@ function AllergyDialog({
             <Dialog.Title className="dialog__title">Allergies</Dialog.Title>
           </Flex>
           <Dialog.Description className="dialog__description">
-            Add the allergens that aren't good to you. An icon will be shown if
-            a recipe contains these allergens.
+            Add the allergens that aren't good to you. An icon will be shown to
+            the recipe item if a recipe contains these allergens.
           </Dialog.Description>
           <Flex direction="column" className="dialog__textfield-container">
             <TextField.Root
