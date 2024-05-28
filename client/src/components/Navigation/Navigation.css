@@ -22,12 +22,14 @@
   font-size: 0.9rem;
   font-weight: 400;
   background-color: var(--button-muted);
+  cursor: pointer;
 }
 
 .navigation__link {
   padding: 4px;
   aspect-ratio: 1/1;
   background-color: var(--button-muted);
+  cursor: pointer;
 
   svg {
     padding: 0;

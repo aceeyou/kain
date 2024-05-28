@@ -1,3 +1,7 @@
+import axios from "axios";
+import "./EditProfile.css";
+import defaultDP from "../../assets/default-dp.png";
+
 import { useEffect, useRef, useState } from "react";
 import {
   Avatar,
@@ -8,30 +12,34 @@ import {
   Section,
   Switch,
   Text,
-  TextArea,
 } from "@radix-ui/themes";
 import * as Form from "@radix-ui/react-form";
-import * as Dialog from "@radix-ui/react-dialog";
 import * as Label from "@radix-ui/react-label";
-// import * as Switch from "@radix-ui/react-switch";
-import axios from "axios";
-import "./EditProfile.css";
+
 import Container from "../../components/Container";
 import Navigation from "../../components/Navigation/Navigation";
-import defaultDP from "../../assets/default-dp.png";
+import FormField from "../../components/Forms/FormField/FormField";
+import AllergyDialog from "../../components/AllergyDialog/AllergyDialog";
 
-import { TbRadioactiveFilled } from "react-icons/tb";
-import { FaChevronDown } from "react-icons/fa6";
-import { IoMdAdd } from "react-icons/io";
-
-const allergens = ["Eggs", "Scallops", "Shrimp"];
+interface UserDataProps {
+  fullname: string;
+  username: string;
+  bio: string;
+}
 
 function EditProfile() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [darkMode, setDarkMode] = useState(false);
-  const [rawUserData, setRawUserData] = useState({});
-  const [editedData, setEditedData] = useState({});
+  const [privateAccount, setPrivateAccount] = useState(false);
+  const [allergens, setAllergens] = useState(["Eggs", "Scallops", "Shrimp"]);
+  const [allergyInput, setAllergyInput] = useState("");
+  const [rawUserData, setRawUserData] = useState({ profilePicture: "" });
+  const [editedData, setEditedData] = useState<UserDataProps>({
+    fullname: "",
+    username: "",
+    bio: "",
+  });
   const [loadRawUserData, setLoadRawUserData] = useState(true);
   const [image, setImage] = useState(rawUserData?.profilePicture || defaultDP);
 
@@ -39,7 +47,7 @@ function EditProfile() {
     fetchProfile();
 
     return () => {
-      setRawUserData({});
+      setRawUserData({ profilePicture: "" });
     };
   }, []);
 
@@ -59,15 +67,34 @@ function EditProfile() {
         });
     } catch (error: any) {
       console.log("Edit profile page | fetchProfile: ", error?.message);
+      return;
     }
-
-    // console.log(user);
   }
 
   function handleChangeEditedData(name: string, newData: string) {
     setEditedData({ ...editedData, [name]: newData });
   }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setAllergyInput(e.target.value);
+  }
+
+  function handleAddAllergen() {
+    setAllergens((curr) => [...curr, allergyInput]);
+    setAllergyInput("");
+  }
+
+  function handleUpdateAllergies() {
+    alert("updating allergies...");
+    handleCloseDialog();
+  }
+
+  function handleCloseDialog() {
+    setAllergyInput("");
+  }
+
   const clickFileInput = () => fileRef?.current?.click();
+
   return (
     <Container>
       <Navigation title="Edit Profile" />
@@ -116,18 +143,15 @@ function EditProfile() {
               value={editedData?.username}
               onChange={handleChangeEditedData}
             />
-            <Form.Field name="bio" className="edit__form-field">
-              <Form.Label className="edit__form-label">Bio</Form.Label>
-              <Form.Control asChild>
-                <TextArea
-                  name="bio"
-                  placeholder="Say something about yourself..."
-                  resize="none"
-                  size="3"
-                  className="edit__form-textarea"
-                />
-              </Form.Control>
-            </Form.Field>
+            <FormField
+              as="textarea"
+              inputType="text"
+              name="bio"
+              label="Bio"
+              placeholder="Say something about yourself..."
+              value={editedData?.bio}
+              onChange={handleChangeEditedData}
+            />
           </Section>
 
           <Section className="edit__section">
@@ -140,7 +164,7 @@ function EditProfile() {
               General
             </Heading>
             <Flex direction="row" justify="between" mb="2">
-              <Label.Root>Dark Mode </Label.Root>
+              <Label.Root className="label__root">Dark Mode </Label.Root>
 
               <Switch
                 onCheckedChange={() => setDarkMode((curr) => !curr)}
@@ -148,105 +172,20 @@ function EditProfile() {
                 className="darkmode-switch"
               />
             </Flex>
-            <Dialog.Root>
-              <Label.Root htmlFor="allergies">Allergies</Label.Root>
-              <Dialog.Trigger asChild>
-                <Flex
-                  className="allergy-select__container"
-                  as="div"
-                  align="center"
-                  gap="2"
-                  direction="row"
-                  mt="1"
-                >
-                  <TbRadioactiveFilled />
-                  <Text
-                    className="allergy__text"
-                    as="p"
-                    truncate
-                    trim="end"
-                    wrap="wrap"
-                    style={{ marginRight: "auto" }}
-                  >
-                    {allergens.map((allergy, index) => (
-                      <Text>
-                        {allergy}
-                        {index + 1 < allergens.length && ", "}
-                      </Text>
-                    ))}
-                  </Text>
-                  <FaChevronDown />
-                </Flex>
-              </Dialog.Trigger>
-              <Dialog.Portal>
-                <Dialog.Overlay className="dialog__overlay" />
-                <Dialog.Content className="dialog__content">
-                  <Dialog.Title>
-                    <Flex align="center" className="dialog__title-ctn">
-                      <TbRadioactiveFilled size={22} />
-                      <Heading as="h1">Allergies</Heading>
-                    </Flex>
-                  </Dialog.Title>
-                  <Dialog.Description className="dialog__description">
-                    <Text>
-                      Select the allergens that isn't good to you. An icon will
-                      be shown if a recipe contains these allergens.
-                    </Text>
-                  </Dialog.Description>
 
-                  {/* <Flex align="center" className="dialog__allergy-input"> */}
-                  <Box className="fieldset">
-                    <label htmlFor="allergyInput" className="sr-only">
-                      Search for allergens
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Add your allergen"
-                      id="allergyInput"
-                    />
-                    <Button
-                      className="add-allergy-btn"
-                      size="4"
-                      variant="solid"
-                    >
-                      <IoMdAdd />
-                    </Button>
-                  </Box>
-                  {/* </Flex> */}
-
-                  <Box className="dialog__existing-allergies">
-                    <Text as="p" className="existing-allergy-title">
-                      Existing Allegies
-                    </Text>
-                    <Flex
-                      gap="2"
-                      direction="row"
-                      wrap="wrap"
-                      className="flex-allergies"
-                    >
-                      {allergens.map((allergy) => (
-                        <Text className="allergy" as="p" key={allergy}>
-                          {allergy}
-                        </Text>
-                      ))}
-                    </Flex>
-                  </Box>
-                  <Flex justify="end" className="dialog__buttons">
-                    <Dialog.Close asChild>
-                      <Button size="4" variant="outline">
-                        Close
-                      </Button>
-                    </Dialog.Close>
-                    <Dialog.Close asChild>
-                      <Button variant="solid" className="allergies-save-btn">
-                        Save
-                      </Button>
-                    </Dialog.Close>
-                  </Flex>
-                </Dialog.Content>
-              </Dialog.Portal>
-            </Dialog.Root>
+            {/* Dialog Screen */}
+            <AllergyDialog
+              allergens={allergens}
+              value={allergyInput}
+              handleInputChange={handleInputChange}
+              handleAddAllergen={handleAddAllergen}
+              handleUpdateAllergies={handleUpdateAllergies}
+              handleCloseDialog={handleCloseDialog}
+            />
+            {/* Dialog End */}
           </Section>
+
+          {/* Account Section */}
           <Section className="edit__section">
             <Heading
               as="h2"
@@ -256,57 +195,23 @@ function EditProfile() {
             >
               Account
             </Heading>
-            <Flex direction="row" justify="between" mb="2">
-              <Label.Root>Private Account </Label.Root>
+            <Flex tabIndex={1} direction="row" justify="between" mb="2">
+              <Label.Root className="label__root">Private Account</Label.Root>
 
               <Switch
-                onCheckedChange={() => setDarkMode((curr) => !curr)}
-                checked={darkMode}
+                onCheckedChange={() => setPrivateAccount((curr) => !curr)}
+                checked={privateAccount}
                 className="darkmode-switch"
               />
             </Flex>
-            <Button className="logout-btn">Log out</Button>
+            <Button tabIndex={1} className="logout-btn">
+              Log out
+            </Button>
           </Section>
         </Form.Root>
       </Box>
     </Container>
   );
 }
-
-interface FieldProps {
-  name: string;
-  label: string;
-  message: string;
-  inputType: string;
-  value: string;
-  onChange: (name: string, newData: string) => void;
-}
-const FormField = ({
-  name,
-  label,
-  message,
-  inputType,
-  value,
-  onChange,
-}: FieldProps) => {
-  return (
-    <Form.Field name={name} className="edit__form-field">
-      <Form.Label className="edit__form-label">{label}</Form.Label>
-      <Form.Control asChild>
-        <input
-          className="edit__form-input"
-          type={inputType}
-          name={name}
-          id={name}
-          value={value}
-          onChange={(e) => onChange(name, e.target.value)}
-        />
-      </Form.Control>
-      <Form.Message className="edit__form-err-msg" match="valueMissing">
-        {message}
-      </Form.Message>
-    </Form.Field>
-  );
-};
 
 export default EditProfile;

@@ -2,7 +2,7 @@
   max-width: 330px;
   min-height: 100svh;
   margin-inline: auto;
-  padding-top: 4rem;
+  padding-top: 6rem;
 }
 
 .registration__subheading {
@@ -79,7 +79,7 @@
   border: none;
   border-radius: var(--rounded-lg);
   background-color: var(--button-primary);
-  color: var(--button-foreground);
+  color: var(--white);
   font-weight: 700;
   font-size: 1.06rem;
   letter-spacing: 0.4px;
@@ -93,7 +93,7 @@
 
 .registration__login-btn {
   color: var(--foreground);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .registration__reveal-btn {

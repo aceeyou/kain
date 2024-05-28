@@ -1,0 +1,142 @@
+.dialog__trigger-label {
+  color: var(--foreground);
+  margin-bottom: 5px;
+}
+.dialog__trigger-btn {
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  border: 1.5px solid var(--input-field-border);
+  background-color: var(--input-field-container);
+
+  svg path {
+    color: var(--foreground);
+  }
+}
+
+.dialog__trigger-content {
+  width: 100%;
+  overflow: hidden;
+}
+
+.dialog__trigger-text-container {
+}
+
+.dialog__trigger-text {
+  margin-right: auto;
+  padding: 0 2px 5px 15px;
+  color: var(--muted);
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.dialog__content {
+  border-radius: var(--rounded-lg) !important;
+}
+.dialog__title {
+  font-weight: 600;
+  margin: 0;
+  padding: 7px 0 0 12px;
+  color: var(--text);
+}
+.dialog__description {
+  color: var(--text);
+  line-height: 1.1;
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin-block: 10px;
+}
+.dialog__textfield-container {
+}
+
+.dialog__textfield {
+  margin-block: 10px 20px;
+  padding-left: 15px;
+  overflow: hidden;
+
+  input {
+    outline: none;
+  }
+
+  .dialog__textfield-add-btn {
+    background-color: var(--text);
+    cursor: pointer;
+
+    button {
+      cursor: pointer;
+    }
+
+    svg path {
+      color: white;
+    }
+  }
+}
+
+.dialog__edit-btn {
+  cursor: pointer;
+}
+.dialog__edit-cancel-btn {
+  padding: 4px 10px !important;
+  font-size: 0.8rem;
+  font-weight: 400;
+  cursor: pointer;
+  background-color: var(--button-muted);
+}
+
+.dialog__edit-item {
+  border-radius: var(--rounded-md);
+  cursor: pointer;
+}
+
+.dialog__edit-item,
+.dialog__edit-item span {
+  background-color: rgb(243, 186, 186) !important;
+}
+
+.dialog__textfield:has(input:focus) {
+  outline: 1.8px solid var(--button-muted);
+}
+
+.dialog__content-label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.dialog__content-allergy-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.dialog__content-text {
+  padding: 3px 8px;
+  color: var(--text);
+  border-radius: var(--rounded-md);
+  background-color: var(--dialog-btn-bg);
+  border-radius: var(--rounded-md);
+  overflow: hidden;
+}
+
+.dialog__content-btns {
+  margin-top: 3rem;
+}
+
+.dialog__content-close-btn {
+  cursor: pointer;
+}
+
+.dialog__content-close-btn:hover {
+  background: rgb(231, 231, 231);
+}
+.dialog__content-save-btn {
+  background-color: var(--main-primary);
+  cursor: pointer;
+}
+
+.dialog__content-save-btn:hover {
+  opacity: 0.85;
+}

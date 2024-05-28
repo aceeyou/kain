@@ -248,19 +248,20 @@ SIGN UP FORM
     flex-direction: column;
 
     .inputfield__input {
-      width: 90%;
+      width: 100%;
       background-color: transparent;
       border: none;
       outline: none;
       padding: 11px 0 3px;
       z-index: 9;
+      color: var(--text) !important;
     }
   }
 
   .inputfield__label {
     position: absolute;
     left: 18px;
-    transform: translateY(5px);
+    transform: translateY(3px);
     transition: ease-out 200ms;
   }
 
@@ -303,14 +304,10 @@ SIGN UP FORM
   background-color: var(--primary);
 }
 
-.inputfield__input {
-  width: 100%;
-}
-
 .inputfield__input:focus + .inputfield__label,
 .inputfield__input:valid + .inputfield__label,
 .inputHasValue {
-  transform: translateY(-6px) !important;
+  transform: translateY(-4px) !important;
   left: 18px;
   font-size: 0.65rem;
   color: var(--ashblack);

@@ -1,0 +1,94 @@
+.edit__form-field {
+  margin-bottom: 10px;
+}
+
+.edit__form-label {
+  font-size: 0.8rem;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: var(--foreground);
+}
+
+.label__root {
+  color: var(--foreground);
+}
+
+.edit__form-input,
+.edit__form-textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 15px;
+  border: 1.5px solid var(--input-field-border);
+  border-radius: var(--rounded-sm);
+  background-color: var(--input-field-container);
+}
+
+.textarea-container {
+  border: 1px solid var(--input-field-border) !important;
+}
+
+.textarea-container:has(textarea:focus) {
+  outline: 1.5px solid var(--white);
+}
+
+.edit__form-textarea {
+  padding: 0;
+  border: 1.5px solid var(--input-field-border) !important;
+  color: var(--foreground);
+}
+
+.rt-TextAreaRoot {
+  border: 1.5px solid var(--input-field-border) !important;
+}
+
+.edit__form-input:focus,
+.edit__form-textarea:focus {
+  outline: 1.2px solid var(--foreground) !important;
+}
+
+textarea {
+  outline: none !important;
+}
+
+.edit__form-err-msg {
+}
+
+.edit__form-textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 15px;
+  border: 1.5px solid var(--input-field-border);
+  border-radius: var(--rounded-sm);
+  background-color: var(--input-field-container);
+}
+
+.textarea-container {
+  border: 1px solid var(--input-field-border) !important;
+}
+
+.textarea-container:has(textarea:focus) {
+  outline: 1.5px solid var(--white);
+}
+
+.edit__form-textarea {
+  padding: 0;
+  border: 1.5px solid var(--input-field-border) !important;
+  color: var(--foreground);
+  box-shadow: unset;
+  background-color: var(--input-field-container);
+}
+
+.rt-TextAreaRoot {
+  border: 1.5px solid var(--input-field-border) !important;
+}
+
+.edit__form-textarea:focus {
+  outline: 1.2px solid var(--foreground) !important;
+}
+textarea {
+  outline: none !important;
+}
+
+textarea::placeholder {
+  color: var(--muted) !important;
+}

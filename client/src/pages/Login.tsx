@@ -189,9 +189,12 @@ function Login() {
             loading={loading}
             disabled={loading || userForm.password.length < 8}
             variant="solid"
-            color="orange"
             size="2"
-            style={{ width: "100%", paddingBlock: "1.2rem" }}
+            style={{
+              width: "100%",
+              paddingBlock: "1.2rem",
+              backgroundColor: "var(--accent)",
+            }}
           >
             <Text size="3" style={{ color: "white" }}>
               Login
