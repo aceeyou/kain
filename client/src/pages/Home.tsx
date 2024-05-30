@@ -16,6 +16,8 @@ import {
   Flex,
   Heading,
   Grid,
+  Section,
+  Box,
 } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Avatar from "@radix-ui/react-avatar";
@@ -31,6 +33,7 @@ type OnSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => void;
 interface FunctionHandlingCard {
   _id: number;
   recipe_name: string;
+  recipe_owner: string;
 }
 
 // Dummy Data
@@ -82,6 +85,7 @@ function Home() {
         await axios
           .get("http://127.0.0.1:8080/recipes", { withCredentials: true })
           .then((res) => {
+            console.log("recipes | home: ", res);
             setRecipes(res.data);
           });
       } catch (error: any) {
@@ -177,18 +181,6 @@ function Home() {
       </NavigationMenu.Root>
       {/* Search bar */}
       <SearchBox handleOnSubmit={handleOnSubmit} />
-      {/* <ScrollArea.Root>
-        <ScrollArea.Viewport>
-          {list.map((item, index) => (
-            <Button variant="soft" key={index}>
-              {item}
-            </Button>
-          ))}
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar orientation="horizontal">
-          <ScrollArea.Thumb />
-        </ScrollArea.Scrollbar>
-      </ScrollArea.Root> */}
       <ScrollArea
         className="home__scrollable"
         type="auto"
@@ -212,17 +204,32 @@ function Home() {
         </Flex>
       </ScrollArea>
 
-      <Heading as="h2" size="3" className="home__recipe-heading">
-        Popular
-      </Heading>
-      <ScrollArea
-        className="home__popular-recipes-container"
-        type="auto"
-        scrollbars="horizontal"
-        size="1"
-        style={{ paddingBottom: "15px" }}
-      >
-        <Flex gap="2" direction="row" className="home__popular-recipes">
+      <Section py="0">
+        <Heading as="h2" size="3" className="home__recipe-heading">
+          Popular
+        </Heading>
+        <ScrollArea
+          scrollbars="horizontal"
+          className="home__recipe-scrollbar-container"
+        >
+          <Flex direction="row" gap="2" className="home__recipe-scrollbar-flex">
+            {!!recipes &&
+              recipes.map((recipe: any, index: number) => (
+                <Recipe
+                  key={index}
+                  recipe={recipe}
+                  handleClick={() => handleClickOnCard(recipe)}
+                />
+              ))}
+          </Flex>
+        </ScrollArea>
+      </Section>
+
+      <Section mt="0" mb="0">
+        <Heading as="h2" size="2" className="home__recipe-heading">
+          Recipes
+        </Heading>
+        <Grid gap="2" className="home__discover-recipes">
           {!!recipes &&
             recipes.map((recipe: any, index: number) => (
               <Recipe
@@ -231,22 +238,8 @@ function Home() {
                 handleClick={() => handleClickOnCard(recipe)}
               />
             ))}
-        </Flex>
-      </ScrollArea>
-
-      <Heading as="h2" size="3" className="home__recipe-heading">
-        Recipes
-      </Heading>
-      <Grid columns="2" gap="2" className="home__discover-recipes">
-        {!!recipes &&
-          recipes.map((recipe: any, index: number) => (
-            <Recipe
-              key={index}
-              recipe={recipe}
-              handleClick={() => handleClickOnCard(recipe)}
-            />
-          ))}
-      </Grid>
+        </Grid>
+      </Section>
     </Container>
   );
 }

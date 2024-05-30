@@ -30,6 +30,7 @@ import {
   addAllergies,
   removeAllergies,
 } from "./controllers/UserProfile/allergies.js";
+import { fetchRecipes } from "./controllers/recipes/RecipesPublic.js";
 
 // import { cloudinary } from "./helpers/cloudinary";
 
@@ -239,16 +240,7 @@ app.post("/addrecipe", authenticateToken, async (req, res) => {
   }
 });
 
-app.get("/recipes", authenticateToken, async (req, res) => {
-  const result = await getAllRecipes();
-  try {
-    if (result) {
-      return res.status(201).send(result);
-    }
-  } catch (error) {
-    return res.status(401).send("Request denied");
-  }
-});
+app.get("/recipes", authenticateToken, fetchRecipes);
 
 app.get("/recipes/:id", authenticateToken, async (req, res) => {
   const result = await getRecipesOfUser(req.params.id);

@@ -1,24 +1,25 @@
-import { Card, Flex, Heading, Text } from "@radix-ui/themes";
+import { Box, Button, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import "./Recipe.css";
+import { FaHeart } from "react-icons/fa6";
+import { FiHeart } from "react-icons/fi";
 
 // interface
 interface PropTypes {
   recipe: {
     image?: string | null;
     recipe_name?: string | null;
-    cooking_time: number;
-    cooking_unit: string;
+    recipe_owner?: string | null;
   };
   handleClick: () => void;
 }
 
-function RecipeProfile({ recipe, handleClick }: PropTypes) {
+function Recipe({ recipe, handleClick }: PropTypes) {
   return (
     <Card
-      className="recipeprofile__card"
+      className="home__recipe-card"
       variant="ghost"
       asChild
-      size="3"
+      size="1"
       tabIndex={1}
       onClick={handleClick}
       onKeyDown={(key) => {
@@ -26,7 +27,7 @@ function RecipeProfile({ recipe, handleClick }: PropTypes) {
       }}
     >
       <Flex
-        className="recipeprofile__content"
+        className="home__recipe-content"
         as="div"
         display="flex"
         direction="column"
@@ -35,15 +36,18 @@ function RecipeProfile({ recipe, handleClick }: PropTypes) {
           background: `url(${recipe.image})`,
         }}
       >
-        <Text className="recipeprofile__time">
-          {recipe.cooking_time} {recipe.cooking_unit}
-        </Text>
-        <Heading className="recipeprofile__recipe-name">
-          {recipe.recipe_name}
-        </Heading>
+        <Button onClick={() => alert("hi")} className="home__recipe-save">
+          <FiHeart size={21} />
+        </Button>
+        <Box>
+          <Heading className="home__recipe-recipe-name">
+            {recipe.recipe_name}
+          </Heading>
+          <Text className="home__recipe-owner">@{recipe.recipe_owner}</Text>
+        </Box>
       </Flex>
     </Card>
   );
 }
 
-export default RecipeProfile;
+export default Recipe;
