@@ -1,7 +1,6 @@
 .container__profile-page {
   min-height: 100svh;
   max-width: var(--max-width);
-  min-width: var(--min-width);
   margin-inline: auto;
 }
 
@@ -14,7 +13,7 @@
 .profile__container {
   display: flex;
   margin-top: 0px;
-  padding-inline: 15px;
+  /* padding-inline: 15px; */
 
   .profile__display-picture {
     width: 80px;

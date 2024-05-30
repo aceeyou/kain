@@ -11,6 +11,7 @@ interface PropTypes {
   user: {
     _id: number;
     profilePicture: string;
+    bio: string;
     fullname: string;
     username: string;
     recipe_count: number;
@@ -120,11 +121,7 @@ function UserInformation({ user }: PropTypes) {
         </Section>
       </Box>
       <Section size="1" className="userInfo__bio">
-        <Text as="p">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-          provident fugiat officiis vitae et cum dolore, animi amet consequatur
-          beatae.
-        </Text>
+        <Text as="p">{user.bio}</Text>
       </Section>
     </Container>
   );

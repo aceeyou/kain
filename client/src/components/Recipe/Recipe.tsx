@@ -1,57 +1,49 @@
-import { Box, Button, Card, Flex, Text } from "@radix-ui/themes";
-
-// import { FaHeart } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
+import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import "./Recipe.css";
 
-interface PropType {
-  owner: boolean;
+// interface
+interface PropTypes {
   recipe: {
-    recipe_name: string;
-    image: string;
+    image?: string | null;
+    recipe_name?: string | null;
     cooking_time: number;
+    cooking_unit: string;
   };
-  handleOnClick: () => void;
+  handleClick: () => void;
 }
 
-function Recipe({ recipe, handleOnClick, owner = false }: PropType) {
-  const handleFavBtnClick = () => {
-    alert("hi");
-    return;
-  };
+function RecipeProfile({ recipe, handleClick }: PropTypes) {
   return (
-    <Box
-      className="recipe__container"
-      style={{
-        background: `url(${recipe.image})`,
+    <Card
+      className="recipeprofile__card"
+      variant="ghost"
+      asChild
+      size="3"
+      tabIndex={1}
+      onClick={handleClick}
+      onKeyDown={(key) => {
+        if (key.key === "Enter") handleClick;
       }}
     >
-      {owner ? (
-        <Text className="recipe__fav-btn time">{recipe?.cooking_time} min</Text>
-      ) : (
-        <Button onClick={handleFavBtnClick} className="recipe__fav-btn">
-          <FaRegHeart size={18} />
-        </Button>
-      )}
-      <Card
-        className="recipe__card"
-        variant="ghost"
-        style={{ height: "100%" }}
-        onClick={handleOnClick}
+      <Flex
+        className="recipeprofile__content"
+        as="div"
+        display="flex"
+        direction="column"
+        justify="between"
+        style={{
+          background: `url(${recipe.image})`,
+        }}
       >
-        <Flex as="div" direction="column" className="recipe__description">
-          <Text as="p" className="recipe__recipe-name">
-            {recipe.recipe_name}
-          </Text>
-          {!owner && (
-            <Text as="p" className="recipe__recipe-owner">
-              @{recipe.recipe_name}
-            </Text>
-          )}
-        </Flex>
-      </Card>
-    </Box>
+        <Text className="recipeprofile__time">
+          {recipe.cooking_time} {recipe.cooking_unit}
+        </Text>
+        <Heading className="recipeprofile__recipe-name">
+          {recipe.recipe_name}
+        </Heading>
+      </Flex>
+    </Card>
   );
 }
 
-export default Recipe;
+export default RecipeProfile;

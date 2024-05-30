@@ -178,6 +178,7 @@ function Login() {
             display: "block",
             fontSize: ".8rem",
             marginBlock: "0 1rem",
+            color: "var(--foreground)",
           }}
         >
           Forgot Password?

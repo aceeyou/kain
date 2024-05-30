@@ -1,52 +1,52 @@
-import { Button, Container, Flex, Heading } from "@radix-ui/themes";
+import { Button, Container, Flex, Heading, Spinner } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { FaArrowLeft } from "react-icons/fa6";
 
 import "./Navigation.css";
 import { useNavigate } from "react-router-dom";
-interface Title {
+interface NavigationProps {
   title: string;
+  isLoading: boolean;
+  handleRightButton: () => void;
 }
-function Navigation({ title }: Title) {
+function Navigation({ title, handleRightButton, isLoading }: NavigationProps) {
   const navigate = useNavigate();
   return (
     <Container className="navigation__container">
       <NavigationMenu.Root className="navigation__root">
-        <NavigationMenu.List className="navigation__list-ctn">
-          <Flex
-            direction="row"
-            justify="between"
-            align="center"
-            className="navigation__flexbox"
-          >
-            <NavigationMenu.Link
+        <Flex
+          asChild
+          direction="row"
+          justify="between"
+          align="center"
+          className="navigation__flexbox"
+        >
+          <NavigationMenu.List className="navigation__list-ctn">
+            <Button
               asChild
               tabIndex={1}
-              className="navigation__link"
+              size="1"
+              className="navigation__item-btn"
               onClick={() => navigate(-1)}
             >
-              <NavigationMenu.Item
-                asChild
-                tabIndex={-1}
-                className="navigation__item"
-              >
-                <Flex align="center" justify="center">
-                  <FaArrowLeft size={18} />
-                </Flex>
+              <NavigationMenu.Item className="navigation__item">
+                <FaArrowLeft size={18} />
               </NavigationMenu.Item>
-            </NavigationMenu.Link>
-            <NavigationMenu.Item asChild className="navigation__item">
-              <Button
-                size="1"
-                tabIndex={1}
-                type="button"
-                className="navigation__item-btn"
-              >
-                save
-              </Button>
-            </NavigationMenu.Item>
-          </Flex>
-        </NavigationMenu.List>
+            </Button>
+            <Button
+              asChild
+              size="1"
+              tabIndex={1}
+              type="button"
+              className="navigation__item-btn"
+              onClick={handleRightButton}
+            >
+              <NavigationMenu.Item className="navigation__item">
+                {isLoading ? <Spinner size="3" /> : "save"}
+              </NavigationMenu.Item>
+            </Button>
+          </NavigationMenu.List>
+        </Flex>
         <Heading className="navigation__title">{title}</Heading>
       </NavigationMenu.Root>
     </Container>

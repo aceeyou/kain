@@ -35,27 +35,44 @@
   padding: 0;
   border: 1.5px solid var(--input-field-border) !important;
   color: var(--foreground);
+  height: 100% !important;
 }
 
-.rt-TextAreaRoot {
-  border: 1.5px solid var(--input-field-border) !important;
+.edit__form-textarea:has(textarea:focus) {
+  outline: 1.5px solid var(--white);
 }
 
-.edit__form-input:focus,
-.edit__form-textarea:focus {
+.edit__form-input:focus {
   outline: 1.2px solid var(--foreground) !important;
 }
 
-textarea {
-  outline: none !important;
+.edit__form-invalid {
+  position: relative;
+}
+
+.edit__form-invalid .edit__form-input {
+  border: 2px solid var(--warning);
+}
+
+.edit__form-invalid .icon__invalid {
+  position: absolute;
+  top: 31px;
+  right: 12px;
+  path {
+    color: var(--warning);
+  }
 }
 
 .edit__form-err-msg {
+  display: block;
+  text-align: right;
+  color: var(--warning);
 }
 
 .edit__form-textarea {
   display: block;
   width: 100%;
+  height: 100% !important;
   padding: 8px 15px;
   border: 1.5px solid var(--input-field-border);
   border-radius: var(--rounded-sm);
@@ -78,17 +95,29 @@ textarea {
   background-color: var(--input-field-container);
 }
 
-.rt-TextAreaRoot {
-  border: 1.5px solid var(--input-field-border) !important;
-}
-
 .edit__form-textarea:focus {
   outline: 1.2px solid var(--foreground) !important;
 }
+
 textarea {
   outline: none !important;
+  height: 100% !important;
 }
 
 textarea::placeholder {
   color: var(--muted) !important;
+}
+
+.rt-TextAreaRoot {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 125px !important;
+  border: 1.5px solid var(--input-field-border) !important;
+  background-color: var(--input-field-container) !important;
+}
+
+.rt-TextAreaInput {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 120px !important;
 }

@@ -1,27 +1,25 @@
 import "./styles/Profile.css";
 
-import { PiSlidersHorizontalBold } from "react-icons/pi";
-import { IoMdHeartEmpty } from "react-icons/io";
-import { IoPlayCircleOutline } from "react-icons/io5";
-import { CiMenuKebab } from "react-icons/ci";
-import { GoCopy } from "react-icons/go";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import defaultDP from "../assets/default-dp.png";
-import PageNavigation from "../components/PageNavigation/PageNavigation";
-import UserInformation from "../components/UserInformation/UserInformation";
+import { PiSlidersHorizontalBold } from "react-icons/pi";
+import { IoPlayCircleOutline } from "react-icons/io5";
+
 import {
   Box,
   Button,
-  Container,
   Flex,
   Skeleton,
   SegmentedControl,
 } from "@radix-ui/themes";
-import * as Menubar from "@radix-ui/react-menubar";
+
 import LoadingProfileHeader from "../components/LoadingComponents/LoadingProfileHeader/LoadingProfileHeader";
+import Container from "../components/ui/Container";
+import PageNavigation from "../components/PageNavigation/PageNavigation";
+import UserInformation from "../components/UserInformation/UserInformation";
 import RecipeProfile from "../components/RecipeProfile/RecipeProfile";
 
 interface RecipePropType {
@@ -29,14 +27,17 @@ interface RecipePropType {
   recipe_name: string;
   image: string;
   cooking_time: number;
+  cooking_unit: string;
 }
 
-// axios.defaults.withCredentials = true;
+interface FunctionHandlingCard {
+  _id: number;
+  recipe_name: string;
+}
 
 const menuList = ["Recipes", "Minced"];
 
 function Profile() {
-  // const fileRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [userDataLoading, setUserDataLoading] = useState(true);
   const [recipesLoading, setRecipesLoading] = useState(true);
@@ -46,16 +47,16 @@ function Profile() {
     fullname: "",
     username: "",
     profilePicture: defaultDP,
+    bio: "",
     recipe_count: 0,
     following_count: 0,
     follower_count: 0,
   });
-  const [image, setImage] = useState(user?.profilePicture || defaultDP);
   const [recipesOfUser, setRecipesOfUser] = useState([]);
 
   useEffect(() => {
     fetchPostedRecipes(user._id);
-  }, [navigate]);
+  }, [navigate, user._id]);
 
   useEffect(() => {
     fetchProfile();
@@ -69,14 +70,11 @@ function Profile() {
         .then((data: any) => {
           fetchPostedRecipes(data.data._id);
           setUser({ ...data.data });
-          setImage(data.data.profilePicture);
           setUserDataLoading(false);
         });
     } catch (error: any) {
       console.log("Profile page | fetchProfile: ", error?.message);
     }
-
-    // console.log(user);
   }
 
   async function fetchPostedRecipes(id: number) {
@@ -93,58 +91,17 @@ function Profile() {
     } catch (error: any) {
       console.log("Profile page | fetchRecipes: ", error?.message);
     }
-    // if (recipes) console.log(recipes);
   }
 
-  function handleChangeActiveTab(tab: string) {
-    setActiveTab(tab);
-  }
+  // function handleChangeActiveTab(tab: string) {
+  //   setActiveTab(tab);
+  // }
 
-  const handleClickOnCard = (recipe) => {
+  const handleClickOnCard = (recipe: FunctionHandlingCard) => {
     navigate(
       `/recipe/${recipe?._id}/${recipe?.recipe_name}
         `
     );
-  };
-
-  const handleUpload = async (file: any) => {
-    try {
-      const res = await axios.post(
-        "http://127.0.0.1:8080/uploadProfilePicture",
-        {
-          userId: user._id,
-          image: file,
-        },
-        { withCredentials: true }
-      );
-      if (res) {
-        setImage(res.data.profilePicture);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  function handleImageChange(e: any) {
-    if (e?.target?.files.length > 0) {
-      const file: any = e?.target?.files[0];
-
-      transformFile(file);
-    } else return;
-  }
-
-  // transform images to base64
-  const transformFile = (file: any) => {
-    const reader = new FileReader();
-
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        handleUpload(reader.result);
-      };
-    } else {
-      setImage(defaultDP);
-    }
   };
 
   return (

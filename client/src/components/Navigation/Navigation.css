@@ -15,28 +15,37 @@
 }
 .navigation__item {
   border-radius: var(--rounded-sm);
-}
-
-.navigation__item-btn {
-  padding-block: 0px !important;
-  font-size: 0.9rem;
-  font-weight: 400;
-  background-color: var(--button-muted);
-  cursor: pointer;
-}
-
-.navigation__link {
-  padding: 4px;
-  aspect-ratio: 1/1;
-  background-color: var(--button-muted);
-  cursor: pointer;
-
+  padding-inline: -2px !important;
   svg {
     padding: 0;
     path {
       color: var(--foreground);
     }
   }
+}
+.rt-Button:where(.rt-r-size-1):where(:not(.rt-variant-ghost)) {
+  padding: 4px 8px !important;
+  background-color: var(--button-muted);
+}
+
+.rt-Button:nth-child(1):where(.rt-r-size-1):where(:not(.rt-variant-ghost)) {
+  padding: 4px !important;
+  background-color: var(--button-muted);
+}
+
+.navigation__item-btn {
+  padding-block: 0px !important;
+  font-size: 0.9rem;
+  font-weight: 400;
+  background-color: var(--button-muted) !important;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.navigation__link {
+  /* padding: 4px; */
+  aspect-ratio: 1/1;
+  cursor: pointer;
 }
 
 .navigation__title {

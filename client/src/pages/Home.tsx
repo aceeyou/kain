@@ -28,6 +28,11 @@ import Recipe from "../components/Recipe/Recipe";
 // types
 type OnSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => void;
 
+interface FunctionHandlingCard {
+  _id: number;
+  recipe_name: string;
+}
+
 // Dummy Data
 const list = [
   "All",
@@ -91,6 +96,13 @@ function Home() {
   const handleOnSubmit: OnSubmitHandler = (e) => {
     e.preventDefault();
     console.log("hi");
+  };
+
+  const handleClickOnCard = (recipe: FunctionHandlingCard) => {
+    navigate(
+      `/recipe/${recipe?._id}/${recipe?.recipe_name}
+        `
+    );
   };
   return (
     <Container size="1" align="center" className="home__container">
@@ -216,8 +228,7 @@ function Home() {
               <Recipe
                 key={index}
                 recipe={recipe}
-                owner={false}
-                handleOnClick={() => {}}
+                handleClick={() => handleClickOnCard(recipe)}
               />
             ))}
         </Flex>
@@ -232,8 +243,7 @@ function Home() {
             <Recipe
               key={index}
               recipe={recipe}
-              owner={false}
-              handleOnClick={() => {}}
+              handleClick={() => handleClickOnCard(recipe)}
             />
           ))}
       </Grid>

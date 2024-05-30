@@ -13,7 +13,7 @@ interface PropType {
   error_msg?: string | null | undefined;
 
   handleViewPw?: ((e: any) => void | undefined) | undefined;
-  handleOnSubmit?: ((e: any) => void | undefined) | undefined;
+  handleOnSubmit?: (e: React.ChangeEvent<HTMLInputElement>) => void | undefined;
 }
 
 import { useState } from "react";

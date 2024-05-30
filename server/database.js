@@ -23,7 +23,7 @@ export async function getUsers() {
 
 export async function getUserWithID(id) {
   const [result] = await pool.query(
-    `SELECT _id, fullname, email, username, profilePicture, recipe_count, following_count, follower_count FROM users WHERE _id = ?`,
+    `SELECT _id, fullname, email, username, profilePicture, bio, recipe_count, following_count, follower_count, private FROM users WHERE _id = ?`,
     [id]
   );
   return result[0];

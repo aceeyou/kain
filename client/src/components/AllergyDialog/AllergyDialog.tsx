@@ -15,15 +15,16 @@ import { TbRadioactiveFilled } from "react-icons/tb";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import { LiaTrashAltSolid } from "react-icons/lia";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface AllergensProp {
   allergens: string[];
   value: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleAddAllergen: () => void;
-  handleUpdateAllergies: () => void;
+  handleAddAllergen: (str: string[]) => void;
+  handleUpdateAllergies: (str: string[], add: string[], rem: string[]) => void;
   handleCloseDialog: () => void;
+  setAllergyInput: (str: string) => void;
 }
 
 type List = string[];
@@ -32,22 +33,39 @@ function AllergyDialog({
   allergens,
   value,
   handleInputChange,
-  handleAddAllergen,
   handleUpdateAllergies,
   handleCloseDialog,
+  setAllergyInput,
 }: AllergensProp) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [allergyList, setAllergyList] = useState<List>([...allergens]);
+  const [addedAllegy, setAddedAllergy] = useState<List>([]);
+  const [removedAllegy, setRemovedAllergy] = useState<List>([]);
+
+  useEffect(() => {
+    setAllergyList(allergens);
+    setAddedAllergy([]);
+    setRemovedAllergy([]);
+  }, [allergens]);
 
   function handleReset() {
     setIsEditMode(false);
   }
 
+  function handleAddAllergy() {
+    const list = [...allergyList];
+    list.push(value);
+    setAllergyList([...list]);
+    setAddedAllergy((curr) => [...curr, value]);
+    setAllergyInput("");
+  }
+
   function handleAddToRemoveList(index: number) {
     const list = [...allergyList];
+    setRemovedAllergy((curr) => [...curr, list[index]]);
     list.splice(index, 1);
-    console.log(list);
     setAllergyList([...list]);
+    setAllergyInput("");
   }
 
   function handleCloseButton() {
@@ -58,7 +76,7 @@ function AllergyDialog({
 
   function handleSaveButton() {
     setIsEditMode(false);
-    handleUpdateAllergies();
+    handleUpdateAllergies(allergyList, addedAllegy, removedAllegy);
   }
   return (
     <Dialog.Root>
@@ -82,10 +100,10 @@ function AllergyDialog({
                   wrap="wrap"
                 >
                   {allergyList.map((allergy, index) => (
-                    <>
+                    <span key={allergy}>
                       {allergy}
                       {index + 1 < allergyList.length && ", "}
-                    </>
+                    </span>
                   ))}
                 </Text>
               </Box>
@@ -110,11 +128,11 @@ function AllergyDialog({
               className="dialog__textfield"
               value={value}
               onChange={handleInputChange}
-              onKeyUp={(k) => k.key === "Enter" && handleAddAllergen()}
+              onKeyUp={(k) => k.key === "Enter" && handleAddAllergy()}
             >
               <TextField.Slot className="sr-only"></TextField.Slot>
               <TextField.Slot className="dialog__textfield-add-btn">
-                <IconButton onClick={handleAddAllergen}>
+                <IconButton onClick={handleAddAllergy}>
                   <IoMdAdd size={22} />
                 </IconButton>
               </TextField.Slot>

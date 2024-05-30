@@ -24,6 +24,13 @@ import {
   getAllRecipes,
 } from "./database.js";
 
+import { updateProfile } from "./controllers/UserProfile/updateProfile.js";
+import { fetchProfile } from "./controllers/UserProfile/profile.js";
+import {
+  addAllergies,
+  removeAllergies,
+} from "./controllers/UserProfile/allergies.js";
+
 // import { cloudinary } from "./helpers/cloudinary";
 
 const app = express();
@@ -168,10 +175,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/profile", authenticateToken, async (req, res) => {
-  const user = await getUserWithID(req.user.id);
-  res.send(user);
-});
+app.get("/profile", authenticateToken, fetchProfile);
+app.post("/add-allergies", authenticateToken, addAllergies);
+app.post("/remove-allergies", authenticateToken, removeAllergies);
 
 app.post("/uploadProfilePicture", authenticateToken, async (req, res) => {
   let { userId, image } = req.body;
@@ -275,6 +281,32 @@ app.get("/recipe/steps/:id", authenticateToken, async (req, res) => {
     if (result) res.status(200).send(result);
   } catch (error) {
     console.log(error);
+  }
+});
+
+app.post("/usernamechecker", async (req, res) => {
+  try {
+    const result = await usernameExistsChecker(req.body.username);
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/profile/update-profile", authenticateToken, async (req, res) => {
+  const userId = req.user.id;
+  const { fullname, username, bio, acc_private } = req.body;
+  // update profile logic
+  const result = await updateProfile(
+    fullname,
+    username,
+    bio,
+    acc_private,
+    userId
+  );
+  if (result) {
+    if (result.status === "taken") return res.status(409).send(result);
+    return res.send(result);
   }
 });
 

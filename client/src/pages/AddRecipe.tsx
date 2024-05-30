@@ -49,7 +49,7 @@ function AddRecipe() {
       { withCredentials: true }
     );
 
-    if (!!res) navigate("/profile");
+    if (res) navigate("/profile");
   }
 
   const handleLeftElement = () => {
